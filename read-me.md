@@ -6,4 +6,6 @@ This project includes copyrighted material for which I do not hold the copyright
 
 Project start Dec 25, 2022 (I don't know how to format .md docs)
 - Project init, doing some research I'm worried about how to implement this. I need to possibly learn HTML canvas which had not been covered in really any courses. Should be fine!
-- If I want to display the final result on my portfolio website, how would that look? I know I need to run a web server but back-end is still an enigma to me.s
+- If I want to display the final result on my portfolio website, how would that look? I know I need to run a web server but back-end is still an enigma to me.
+
+
