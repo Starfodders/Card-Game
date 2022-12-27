@@ -16,3 +16,5 @@ GOOD
 
 BAD
 - Need to reset the stored elements when rolled, or else the animation plays and the original elements are still there
+- I also pushed some changes to my repo, then suddenly node index.js wasn't working? It was running fine before? Had to install jsdom
+- (UPDATE) I'm an idiot, was node running the wrong file (index.js instead of server.js which served the file)
