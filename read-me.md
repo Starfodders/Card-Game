@@ -10,15 +10,9 @@ Project start Dec 25, 2022 (I don't know how to format .md docs)
 
 Dec 26 2022
 - Made simple dice sprites but need to figure out how to implement dice rolling functionality, build mana system. 
-- I can guess how to do this using plain JS, creating the roller. But how do I add it to Phaser engine?
-- Better understanding of NodeJS / ExpressJS, how to properly serve static pages at get
-- Create a public dir which can serve images that I need (look into Express JS public dir)
-- Loading screens to download all assets that I need (Less relevant, interesting insight moreso!)
+- Switched over to plain JS, figured using a library may be ambitious when I need to develop something using plain JS first! No problem.
+GOOD
+- Sprites I made are loaded nicely and the rolling works, need to assign actual values to the elements as opposed to merely an image
 
-Dec 26 amended
-- I've already made a 'public' dir, its everything in my webroot folder. 
-- Lot of reading ahead of me, need to look at Phaser documentation
-- Work on the dice roll, 1 texture with 4 frames (spritesheet)
-
-
-We're now in the new branch
+BAD
+- Need to reset the stored elements when rolled, or else the animation plays and the original elements are still there
