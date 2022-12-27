@@ -6,6 +6,7 @@ const webRoot = path.join(process.env.HOME, 'Desktop', 'Card-Game');    //states
 
 app.use(express.static(webRoot));                                       //serves static files from the webroot
 
+
 const directory = function(file) {                                      //function, avoids writing webroot each time, converts argument into string for location
     return path.join(webroot, `'${file}'`)
 }

@@ -10,6 +10,8 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
+const roller = document.querySelector('#roller');                   //select dice roll button
+
 
 function preload() {
     this.load.image('sky', 'assets/sky.png')
@@ -18,12 +20,23 @@ function preload() {
     this.load.image('water-dice', 'assets/water-dice.png')
     this.load.image('earth-dice', 'assets/earth-dice.png')
     this.load.spritesheet('dice-all', 'assets/spritemap.png', {frameWidth: 64, frameHeight: 64})
+
+    this.roller.on('pointerdownoutside', )
 }
 
 function create() {
     this.add.image(400, 300, 'sky')
     this.add.image(650, 450, 'dice-all')
+
+    this.anims.create({
+        key: '',
+        frames: this.anims.generateFrameNumbers('dice-all', {start: 0, end: 3}),
+        frameRate: 4
+    })
+
 }
 
 function update() {
+    
 }
+
