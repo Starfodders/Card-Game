@@ -18,3 +18,11 @@ BAD
 - Need to reset the stored elements when rolled, or else the animation plays and the original elements are still there
 - I also pushed some changes to my repo, then suddenly node index.js wasn't working? It was running fine before? Had to install jsdom
 - (UPDATE) I'm an idiot, was node running the wrong file (index.js instead of server.js which served the file)
+
+Dec 27 2022
+- Started by updating the dice roll to include three at once and show a bit of an animation. Added a sound effect. 
+- Something I realized is that I naturally take a FP (Functional Programming) approach vs an OOP (Object-Oriented Approach), its what makes sense to me at this time
+- Added a delay to the rolls so that they populate their areas more 'naturally', unsure if this will be kept
+- Added BG, need to fix the CSS. I feel like I forget how to write CSS everytime
+- Look into AutoBundlers. Was recommended not to include script tags in my HTML file. Maybe NextJS? Or learn Webpack.
+- I Keep running into issues with 'import' and 'export'. Should I learn proper nodeJS syntax or download Babel? 

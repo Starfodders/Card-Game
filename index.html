@@ -1,26 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avatar | Card Game</title>
-    <link rel= 'stylesheet' href = 'styles.css'>
+    <link rel='stylesheet' href='styles.css'>
 </head>
+
 <body>
-    <div class = 'box'>
-        <div class = 'dice-container'>
-            <img class = 'rolling-animation inactive' src = "assets/alldice.gif"/>
+    <div class='wrapper'>
+        <img class='bg-img' src='/assets/background-banner.jpg' />
+        <div class = 'top-container'>
+            TBD what content goes here
         </div>
-        <div class = 'dice-container-2'>
-            <img src="" alt="" class="elementRoll">
-            <img src="" alt="" class="elementRoll">
-            <img src="" alt="" class="elementRoll">
+        <div class='characters-container'>
+            <div class='player-container'>
+                Player
+            </div>
+            <div class='enemy-container'>
+                Enemy
+            </div>
         </div>
+        <div class='roll-container'>
+            <div class='dice-container'>
+                <img class='rolling-animation inactive' src="assets/alldice.gif" />
+                <img class='rolling-animation inactive' src="assets/alldice.gif" />
+                <img class='rolling-animation inactive' src="assets/alldice.gif" />
+            </div>
+            <div class='dice-container-2'>
+                <img src="" alt="" class="elementRoll">
+                <img src="" alt="" class="elementRoll">
+                <img src="" alt="" class="elementRoll">
+            </div>
+            <img id='roll-btn' src='./assets/rollbtn-inactive.png' alt='inactive-roll-button' />
+        </div>
+        <div class='card-container'>
+
+        </div>
+
     </div>
-    <img id = 'roll-btn' src = './assets/rollbtn-inactive.png' alt = 'inactive-roll-button'/>
-    
 </body>
-<script src = "server.js"></script>
-<script src = "index.js"></script>
+<script src="server.js"></script>
+<script src="index.js"></script>
+
 </html>

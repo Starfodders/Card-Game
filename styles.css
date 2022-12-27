@@ -1,12 +1,94 @@
-*, body{
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  /*
+    2. Remove default margin
+  */
+  *, div {
+    margin: 0;
+  }
+  /*
+    3. Allow percentage-based heights in the application
+  */
+  html, body {
+    height: 100%;
+  }
+  /*
+    Typographic tweaks!
+    4. Add accessible line-height
+    5. Improve text rendering
+  */
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  /*
+    6. Improve media defaults
+  */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  /*
+    7. Remove built-in form typography styles
+  */
+  input, button, textarea, select {
+    font: inherit;
+  }
+  /*
+    8. Avoid text overflows
+  */
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  /*
+    9. Create a root stacking context
+  */
+  #root, #__next {
+    isolation: isolate;
+  }
+
+  
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+}
+
+.bg-img {
+    width: 100%;
+    position: absolute;
+    z-index: -3;
+    opacity: 0.7;
+}
+
+.character-container {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: 100%;
+    height: 50%;
+}
+
+.player-container {
+    width: 50%;
     margin: 0;
 }
 
-.box {
-    border: solid 2px black;
-    width: 50vw;
-    height: 200px;
-    margin: 300px auto 0;
+.enemy-container {
+    width: 50%;
+    margin: 0;
+}
+/* okay i need to figure out why this is not working, the margins are still there! */
+.roll-container {
+    width: 100%;
+}
+
+.card-container {
+    width: 100%;
 }
 
 #roll-btn {
