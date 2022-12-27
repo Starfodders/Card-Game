@@ -12,10 +12,11 @@ class Deck {
 }
 
 class Card {
-    constructor(name, element, cost, rarity = 'common') {
+    constructor(name, element, cost, type, rarity = 'common') {
         this.name = name, 
         this.element = element,
         this.cost = cost,
+        this.type = type
         this.rarity = rarity
     }
     use() {

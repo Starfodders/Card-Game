@@ -9,13 +9,13 @@ rollBtn.addEventListener('click', () => {
         rollBtn.src = './assets/rollbtn-inactive.png'                           //resets button position after 50ms
     }, 50)
 
-    rollGIF.forEach(img => {                                                    //rolls x3 dice all at once
+    rollGIF.forEach(img => {                                                    //displays x3 dice GIF at once
         img.classList.remove('inactive')
     })
 
     if (elementsRolled.length >= 1) {
         elementImgHolder.forEach(element => {
-            element.src = ''                                                    //detects if theres any leftover elements, if so it will remove the source attribute
+            element.src = ''                                                    //detects if theres any leftover elements src, if so it will remove the source attribute
         });
         elementsRolled.length = 0;                                              //removes any existing elements
         return diceAnimationRemove();

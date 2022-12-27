@@ -26,3 +26,9 @@ Dec 27 2022
 - Added BG, need to fix the CSS. I feel like I forget how to write CSS everytime
 - Look into AutoBundlers. Was recommended not to include script tags in my HTML file. Maybe NextJS? Or learn Webpack.
 - I Keep running into issues with 'import' and 'export'. Should I learn proper nodeJS syntax or download Babel? 
+GOOD
+- Continued work on everything, nothing special in particular. 
+
+BAD
+- Realized that I may need to add more complexity. Neutral dice should be added? Or have basic moves that take any element? 
+- Or simplify the ENTIRE thing? Maybe just make a Zuko-based game just so I can have focus and deliver a working product? 
