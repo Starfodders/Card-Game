@@ -31,8 +31,5 @@ module.exports = {
 
 
 
-
 //practice exporting modules
 
-//element can be a main element, 'all' (avatar), or 'none' (non-benders like Sokka)
-//each deck has pre-determined set of cards, will add more card additions later
