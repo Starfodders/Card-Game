@@ -31,4 +31,4 @@ GOOD
 
 BAD
 - Realized that I may need to add more complexity. Neutral dice should be added? Or have basic moves that take any element? 
-- Or simplify the ENTIRE thing? Maybe just make a Zuko-based game just so I can have focus and deliver a working product? 
+- Or simplify the ENTIRE thing? Maybe just make a Zuko-based game just so I can have focus and deliver a working product?
