@@ -35,4 +35,4 @@ Example Cards - Fire Elemental
 Example Cards - Character (Zuko)
 1. Track (1 En, draw 2 cards. Next turn draw 1 less card)
 2. Dancing Blade (2 En, deal 2 damage and gain 3 block)
-3. Fire Lotus (3 En, deal 10 damage, gaining 1 extra energy next turn)
+3. Fire Lotus (3 En, deal 10 damage, gaining 1 less energy next turn)
