@@ -1,35 +1,63 @@
 class Deck {
-    constructor(name, element) {
-        this.name = name,
-        this.element = element
+    constructor(deck) {
+        this.deck = deck;
     }
     draw() {
-        console.log('draw function');
+        console.log('draw x cards from top of deck');
     }
     shuffle() {
-        console.log('shuffle function');
+        console.log('shuffle deck');
+    }
+    reMake() {
+        console.log('grab cards from discard pile, then call shuffle');
+    }
+    delete() {
+        console.log('delete this card from deck');
     }
 }
 
+
 class Card {
-    constructor(name, element, cost, type, rarity = 'common') {
+    constructor(name, cost) {
         this.name = name, 
-        this.element = element,
-        this.cost = cost,
-        this.type = type
-        this.rarity = rarity
+        this.cost = cost
     }
-    use() {
-        console.log('card is played, effect, then discarded');
+    onHover() {
+        console.log('Listener for mouse hover, enlarges card');
+    }
+    onClick() {
+        console.log('Card attaches to cursor, waits for cursor release');
     }
 }
+
+class Attack extends Card {
+    constructor(name, cost, damage) {
+        super(name, cost),
+        this.damage = damage
+    }
+    target() {
+        console.log('Attack chosen target');
+    }
+    targetAll() {
+        console.log('Attacks all targets');
+    }
+}
+
+class Block extends Card {
+    constructor(name, cost, block) {
+        super(name, cost),
+        this.block = block
+    }
+}
+
 
 module.exports = {
     Deck,
-    Card
+    Card,
+    Attack,
+    Block
 };
 
 
-
-//practice exporting modules
-
+// const DeckOne = new Deck(baseZuko)
+// const baseZuko = [array of cards]

@@ -1,8 +1,9 @@
 const base = require('./base-deck')
-const {Deck, Card} = base;                  //extracts the classes from base
-// console.log(Card);
+const {Deck, Card, Attack, Block} = base;                  //extracts the classes from base
 
-const firePunch = new Card ('fire punch','fire', 1, 'attack')
-console.log(firePunch);
+const Strike = new Attack('strike', 1, 3)
+const Slash = new Attack('slash', 2, 7)
 
-const fireWave = new Card('fire wave', 'fire', 2, 'attack')
+const Guard = new Block('guard', 1, 2)
+
+const FlameWave = new Attack('flamewave', 2, 2)
