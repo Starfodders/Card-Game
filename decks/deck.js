@@ -7,17 +7,20 @@ class Deck {
     }
     add(card) {
         this.deck.push(card)
+        this.updateCardCount();
     }
     destroy(card) {                                                     //this should be a Card method?    
     }
     draw(cards) {                                                                   //draw x amount of cards and push into hand
         for (let i = 0; i < cards; i++) {
             this.hand.push(this.deck.pop())
-        }             
+            this.updateCardCount();
+            this.updateHandCount();
+        }
     }
     shuffle() {                                                                     //stole this code but made it work, returns the instance of a shuffled deck
-        for (let i = this.deck.length - 1; i > 0; i--) {     
-            let j = Math.floor(Math.random() * i);          
+        for (let i = this.deck.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * i);
             let temp = this.deck[i];
             this.deck[i] = this.deck[j];
             this.deck[j] = temp;
@@ -30,6 +33,12 @@ class Deck {
     }
     delete() {
         console.log('delete this card from deck permanently');
+    }
+    updateCardCount() {                                                             
+        deckCountEl.innerHTML = this.deck.length
+    }
+    updateHandCount() {
+        handCountEl.innerHTML = this.hand.length
     }
 }
 
@@ -89,19 +98,22 @@ const BurningBlock = new Block('burningblock', 1, 1)
 
 //characterSpec
 const Track = new Card('track', 1)              //add card draw later
-const DancingBlade = new Attack ('dancingblade', 2, 2)                          //should I add an instance of receiving defense method to this or rework it the class?
-const FireLotus = new Attack ('firelotus', 3, 10)                               //add debuff to receive 1 less energy
+const DancingBlade = new Attack('dancingblade', 2, 2)                          //should I add an instance of receiving defense method to this or rework it the class?
+const FireLotus = new Attack('firelotus', 3, 10)                               //add debuff to receive 1 less energy
 
 
 const allCards = [Strike, Slash, Guard, FlameWave, Barrage, BurningBlock, Track, DancingBlade, FireLotus]
+
+const doubleCards = allCards.concat(allCards);                                          //for current purposes, double # to create a bigger deck
+
 const deckCountEl = document.querySelector('#deck-count');
+const handCountEl = document.querySelector('#hand-count');
 
 const baseDeck = new Deck;
-allCards.forEach(card => {
+doubleCards.forEach(card => {
     baseDeck.add(card)
 });
 
-deckCountEl.innerHTML = baseDeck.deck.length
 
 
 
