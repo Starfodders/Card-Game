@@ -1,6 +1,8 @@
 const rollBtn = document.querySelector('#roll-btn');
 const rollGIF = document.querySelectorAll('.rolling-animation');            //returns an array
 const elementImgHolder = document.querySelectorAll('.elementRoll');
+const drawButtonEl= document.querySelector('#draw-button');
+
 
 
 function diceAnimationRemove() {                                                //after 1s, remove GIF and getElement()
@@ -10,6 +12,12 @@ function diceAnimationRemove() {                                                
             img.classList.add('inactive')
         })
     }, 1000)
+}
+
+function drawCardButtonEl() {
+    drawButtonEl.addEventListener('click', () => {
+        yourDeck.draw(1)                                                        //hard coded to refer to yourDeck
+    })
 }
 
 ///////////
@@ -61,6 +69,7 @@ function main() {
             return diceAnimationRemove();
         }
     })
+    drawCardButtonEl()
 }
 
 main()

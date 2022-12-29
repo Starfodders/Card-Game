@@ -98,3 +98,25 @@
 .inactive {
     display: none;
 }
+/* play-area takes entirety of bottom screen, with deck and discard piles taking up a small bit, your hand taking up majority */
+.play-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    bottom: 1%;
+}
+
+.deck-container {
+    max-width: 10%;
+}
+
+.hand-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.discard-container {
+    max-width: 10%;
+}

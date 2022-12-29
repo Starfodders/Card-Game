@@ -38,9 +38,6 @@ class Deck {
         }
         return this.deck;
     }
-    reMake() {
-        console.log('grab cards from discard pile, then call shuffle');
-    }
     discard(card) {                                                     //maybe also be a card method?                     
 
     }
@@ -57,9 +54,11 @@ class Deck {
 }
 
 class Card {
-    constructor(name, cost) {
+    constructor(name, cost, type, attributes) {
         this.name = name,
-            this.cost = cost
+        this.cost = cost,
+        this.type = type,                                       //attacks, tactics, specials
+        this.attributes = attributes                            //{attack: x, block: x, thorns: x}
     }
     onHover() {
         console.log('Listener for mouse hover, enlarges card');
@@ -75,45 +74,22 @@ class Card {
     }
 }
 
-class Attack extends Card {
-    constructor(name, cost, damage) {
-        super(name, cost),
-            this.damage = damage
-    }
-    target() {
-        console.log('Attack chosen target');
-    }
-    targetAll() {
-        console.log('Attacks all targets');
-    }
-}
-
-class Block extends Card {
-    constructor(name, cost, block) {
-        super(name, cost),
-            this.block = block
-    }
-    thorns(dmg) {
-        console.log('if thorns activated, deal' + dmg + 'to attacker');
-    }
-}
-
 //attacks
-const Strike = new Attack('strike', 1, 3)
-const Slash = new Attack('slash', 2, 7)
+const Strike = new Card('strike', 1, 'attack', {damage: 3})
+const Slash = new Card('slash', 2, 'attack', {damage: 7})
 
 //defenses
-const Guard = new Block('guard', 1, 2)
+const Guard = new Card('guard', 1, 'tactic', {block: 2})
 
 //elementals
-const FlameWave = new Attack('flamewave', 2, 2)
-const Barrage = new Attack('barrage', 2, 1) //Barrage.targetAll()
-const BurningBlock = new Block('burningblock', 1, 1)
+const FlameWave = new Card('flamewave', 2, 'attack', {damage: 2});
+const Barrage = new Card('barrage', 2, 'attack', {damage: 2}) 
+const BurningBlock = new Card('burningblock', 1, 'tactic', {thorns: 1, block: 1})
 
 //characterSpec
-const Track = new Card('track', 1)              //add card draw later
-const DancingBlade = new Attack('dancingblade', 2, 2)                          //should I add an instance of receiving defense method to this or rework it the class?
-const FireLotus = new Attack('firelotus', 3, 10)                               //add debuff to receive 1 less energy
+const Track = new Card('track', 1, 'tactic')                                            //add card draw later
+const DancingBlade = new Card('dancingblade', 2, 'attack', {damage: 2, block: 3})                          
+const FireLotus = new Card('firelotus', 3, 'attack', {damage: 10})                               //add debuff to receive 1 less energy
 
 
 const allCards = [Strike, Slash, Guard, FlameWave, Barrage, BurningBlock, Track, DancingBlade, FireLotus]
@@ -124,9 +100,9 @@ const deckCountEl = document.querySelector('#deck-count');
 const handCountEl = document.querySelector('#hand-count');
 const discardCountEl = document.querySelector('#discard-count');
 
-const baseDeck = new Deck;
+const yourDeck = new Deck;
 doubleCards.forEach(card => {
-    baseDeck.add(card)
+    yourDeck.add(card)
 });
 
 
