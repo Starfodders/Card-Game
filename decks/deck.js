@@ -7,15 +7,26 @@ class Deck {
     }
     add(card) {
         this.deck.push(card)
-        this.updateCardCount();
-    }
-    destroy(card) {                                                     //this should be a Card method?    
+        this.updateCounts();                                               ///////// KEPT HERE FOR NOW, but should update card count when deck is init start of round
     }
     draw(cards) {                                                                   //draw x amount of cards and push into hand
         for (let i = 0; i < cards; i++) {
-            this.hand.push(this.deck.pop())
-            this.updateCardCount();
-            this.updateHandCount();
+            if (this.hand.length >= 10 && this.deck.length !== 0) {                            //max hand size is 10 cards, if overdraw then send to discard pile
+                this.discardPile.push(this.deck.pop())
+                this.updateCounts()
+            } else if (this.deck.length === 0) {
+                this.discardPile.forEach((discard =>                                   //pushes every discarded card back into deck
+                    this.deck.push(discard)
+                ))
+                this.discardPile.length = 0;                                            //clears the discard pile
+                this.shuffle();             
+                this.updateCounts();
+                this.draw(1);                                                           
+            }
+            else {
+                this.hand.push(this.deck.pop())
+                this.updateCounts()
+            }
         }
     }
     shuffle() {                                                                     //stole this code but made it work, returns the instance of a shuffled deck
@@ -24,21 +35,24 @@ class Deck {
             let temp = this.deck[i];
             this.deck[i] = this.deck[j];
             this.deck[j] = temp;
-            return this.deck;
         }
         return this.deck;
     }
     reMake() {
         console.log('grab cards from discard pile, then call shuffle');
     }
+    discard(card) {                                                     //maybe also be a card method?                     
+
+    }
+    destroy(card) {                                                     //this should be a Card method?    
+    }
     delete() {
         console.log('delete this card from deck permanently');
     }
-    updateCardCount() {                                                             
+    updateCounts() {
         deckCountEl.innerHTML = this.deck.length
-    }
-    updateHandCount() {
         handCountEl.innerHTML = this.hand.length
+        discardCountEl.innerHTML = this.discardPile.length
     }
 }
 
@@ -108,6 +122,7 @@ const doubleCards = allCards.concat(allCards);                                  
 
 const deckCountEl = document.querySelector('#deck-count');
 const handCountEl = document.querySelector('#hand-count');
+const discardCountEl = document.querySelector('#discard-count');
 
 const baseDeck = new Deck;
 doubleCards.forEach(card => {
