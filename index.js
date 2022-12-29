@@ -2,6 +2,7 @@ const rollBtn = document.querySelector('#roll-btn');
 const rollGIF = document.querySelectorAll('.rolling-animation');            //returns an array
 const elementImgHolder = document.querySelectorAll('.elementRoll');
 const drawButtonEl= document.querySelector('#draw-button');
+const handContainerEl = document.querySelector('#hand-container');
 
 
 
@@ -17,8 +18,18 @@ function diceAnimationRemove() {                                                
 function drawCardButtonEl() {
     drawButtonEl.addEventListener('click', () => {
         yourDeck.draw(1)                                                        //hard coded to refer to yourDeck
+        createCardHTML();
     })
 }
+
+function createCardHTML () {
+    const currentCardEl = yourDeck.hand[yourDeck.hand.length-1];                        //selector for current drawn card
+    const nextCard = document.createElement('div');                                         //create new div element
+    nextCard.innerHTML = `<div class = ${currentCardEl.type}><h1>${currentCardEl.name}</h1><p>'This card does this'</p></div>`           //update contents with drawn card info
+    handContainerEl.appendChild(nextCard);                                                              //add to hand container
+    console.log(`Card drawn was ${yourDeck.hand[yourDeck.hand.length-1].name}`)
+}
+
 
 ///////////
 //Get Element IMG

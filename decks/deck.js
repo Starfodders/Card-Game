@@ -82,14 +82,14 @@ const Slash = new Card('slash', 2, 'attack', {damage: 7})
 const Guard = new Card('guard', 1, 'tactic', {block: 2})
 
 //elementals
-const FlameWave = new Card('flamewave', 2, 'attack', {damage: 2});
+const FlameWave = new Card('flame-wave', 2, 'attack', {damage: 2});
 const Barrage = new Card('barrage', 2, 'attack', {damage: 2}) 
-const BurningBlock = new Card('burningblock', 1, 'tactic', {thorns: 1, block: 1})
+const BurningBlock = new Card('burning-block', 1, 'tactic', {thorns: 1, block: 1})
 
 //characterSpec
 const Track = new Card('track', 1, 'tactic')                                            //add card draw later
-const DancingBlade = new Card('dancingblade', 2, 'attack', {damage: 2, block: 3})                          
-const FireLotus = new Card('firelotus', 3, 'attack', {damage: 10})                               //add debuff to receive 1 less energy
+const DancingBlade = new Card('dancing-blade', 2, 'attack', {damage: 2, block: 3})                          
+const FireLotus = new Card('fire-lotus', 3, 'attack', {damage: 10})                               //add debuff to receive 1 less energy
 
 
 const allCards = [Strike, Slash, Guard, FlameWave, Barrage, BurningBlock, Track, DancingBlade, FireLotus]

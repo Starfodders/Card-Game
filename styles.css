@@ -107,16 +107,16 @@
     bottom: 1%;
 }
 
-.deck-container {
+#deck-container {
     max-width: 10%;
 }
 
-.hand-container {
+#hand-container {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.discard-container {
+#discard-container {
     max-width: 10%;
 }
