@@ -1,15 +1,19 @@
 class Deck {
     constructor() {
         this.deck = [];
+        this.hand = [];
+        this.destroyedCards = [];
+        this.discardPile = [];
     }
     add(card) {
         this.deck.push(card)
     }
-    destroy(card) {
-        console.log('destroys the card, removing it from current instance of play');
+    destroy(card) {                                                     //this should be a Card method?    
     }
-    draw(cards) {
-        console.log('draw x cards from top of deck');
+    draw(cards) {                                                                   //draw x amount of cards and push into hand
+        for (let i = 0; i < cards; i++) {
+            this.hand.push(this.deck.pop())
+        }             
     }
     shuffle() {                                                                     //stole this code but made it work, returns the instance of a shuffled deck
         for (let i = this.deck.length - 1; i > 0; i--) {     
@@ -43,6 +47,9 @@ class Card {
     drawCard(card) {                                        //for cards that draw cards
         console.log('draw' + card + 'cards');
     }
+    destroy() {                                             //typically destroyed when USED from hand
+        console.log('card destroyed');
+    }
 }
 
 class Attack extends Card {
@@ -68,14 +75,33 @@ class Block extends Card {
     }
 }
 
+//attacks
+const Strike = new Attack('strike', 1, 3)
+const Slash = new Attack('slash', 2, 7)
 
-module.exports = {
-    Deck,
-    Card,
-    Attack,
-    Block
-};
+//defenses
+const Guard = new Block('guard', 1, 2)
+
+//elementals
+const FlameWave = new Attack('flamewave', 2, 2)
+const Barrage = new Attack('barrage', 2, 1) //Barrage.targetAll()
+const BurningBlock = new Block('burningblock', 1, 1)
+
+//characterSpec
+const Track = new Card('track', 1)              //add card draw later
+const DancingBlade = new Attack ('dancingblade', 2, 2)                          //should I add an instance of receiving defense method to this or rework it the class?
+const FireLotus = new Attack ('firelotus', 3, 10)                               //add debuff to receive 1 less energy
 
 
-// const DeckOne = new Deck(baseZuko)
-// const baseZuko = [array of cards]
+const allCards = [Strike, Slash, Guard, FlameWave, Barrage, BurningBlock, Track, DancingBlade, FireLotus]
+const deckCountEl = document.querySelector('#deck-count');
+
+const baseDeck = new Deck;
+allCards.forEach(card => {
+    baseDeck.add(card)
+});
+
+deckCountEl.innerHTML = baseDeck.deck.length
+
+
+
