@@ -82,10 +82,6 @@
     width: 50%;
     margin: 0;
 }
-/* okay i need to figure out why this is not working, the margins are still there! */
-.roll-container {
-    width: 100%;
-}
 
 .card-container {
     width: 100%;

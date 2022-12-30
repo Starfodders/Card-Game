@@ -11,30 +11,37 @@
 
 <body>
     <div class='wrapper'>
-        <img class='bg-img' src='/assets/background-banner-pixel.png' />
+        <!-- <img class='bg-img' src='/assets/background-banner-pixel.png' /> -->
         <div class = 'top-container'>
             TBD what content goes here
         </div>
         <div class='characters-container'>
             <div class='player-container'>
-                Player
+                <div class ='player-avatar'>
+                    Sprite
+                </div>
+                <div class = 'player-health-container'>
+                    <h1>HP: <span id = 'current-health'>30</span>/<span id = 'max-health'>30</span></h1>
+                </div>
+                <div class = 'player-status-container'>
+                    <div class='energy-container'>
+                        <h1><span id = 'current-energy'>0</span> Energy<h1>
+                    </div>
+                    <div class='dice-container'>
+                        <img class='rolling-animation inactive' src="assets/alldice.gif" />
+                        <img class='rolling-animation inactive' src="assets/alldice.gif" />
+                        <img class='rolling-animation inactive' src="assets/alldice.gif" />
+                    </div>
+                    <div class='dice-container-2'>
+                        <img src="" alt="" class="elementRoll">
+                        <img src="" alt="" class="elementRoll">
+                        <img src="" alt="" class="elementRoll">
+                    </div>
+                </div>
             </div>
             <div class='enemy-container'>
                 Enemy
             </div>
-        </div>
-        <div class='roll-container'>
-            <div class='dice-container'>
-                <img class='rolling-animation inactive' src="assets/alldice.gif" />
-                <img class='rolling-animation inactive' src="assets/alldice.gif" />
-                <img class='rolling-animation inactive' src="assets/alldice.gif" />
-            </div>
-            <div class='dice-container-2'>
-                <img src="" alt="" class="elementRoll">
-                <img src="" alt="" class="elementRoll">
-                <img src="" alt="" class="elementRoll">
-            </div>
-            <img id='roll-btn' src='./assets/rollbtn-inactive.png' alt='inactive-roll-button' />
         </div>
         <div class='play-container'>
             <div id = 'deck-container'>
@@ -48,10 +55,10 @@
                 <h2>Discard pile has <span id = 'discard-count'>0</span> cards</h2>
             </div>
         </div>
-
     </div>
 </body>
-<script src="index.js"></script>
 <script src ='./decks/deck.js'></script>
+<script src="index.js"></script>
+
 
 </html>

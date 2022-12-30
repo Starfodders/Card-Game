@@ -1,8 +1,11 @@
 const rollBtn = document.querySelector('#roll-btn');
 const rollGIF = document.querySelectorAll('.rolling-animation');            //returns an array
 const elementImgHolder = document.querySelectorAll('.elementRoll');
-const drawButtonEl= document.querySelector('#draw-button');
+const drawButtonEl = document.querySelector('#draw-button');
 const handContainerEl = document.querySelector('#hand-container');
+const currEnergyEl = document.querySelector('#current-energy');
+const currHealthEl = document.querySelector('#current-health');
+const maxHealthEl = document.querySelector('#max-health');
 
 
 
@@ -22,13 +25,14 @@ function drawCardButtonEl() {
     })
 }
 
-function createCardHTML () {
-    const currentCardEl = yourDeck.hand[yourDeck.hand.length-1];                        //selector for current drawn card
+function createCardHTML() {
+    const currentCardEl = yourDeck.hand[yourDeck.hand.length - 1];                        //selector for current drawn card
     const nextCard = document.createElement('div');                                         //create new div element
     nextCard.innerHTML = `<div class = ${currentCardEl.type}><h1>${currentCardEl.name}</h1><p>'This card does this'</p></div>`           //update contents with drawn card info
     handContainerEl.appendChild(nextCard);                                                              //add to hand container
-    console.log(`Card drawn was ${yourDeck.hand[yourDeck.hand.length-1].name}`)
+    console.loçg(`Card drawn was ${yourDeck.hand[yourDeck.hand.length - 1].name}`)
 }
+
 
 
 ///////////
@@ -56,19 +60,45 @@ function playDiceRollSound() {                                                  
     diceAudio.play();
 }
 
-// main loop / entrypoint
-function main() {
-    rollBtn.addEventListener('click', () => {
-        rollBtn.src = './assets/rollbtn-active.png';                                //click to change to active state
+/////////////
+///// mods to stats
+/////////////
+
+function modHealth(change = null, full = false) {
+    if (full === true) {                                                    //if full heal is applied, set to true and will equalize the HP to full
+        change = parseInt(maxHealthEl.innerHTML)
+    } else {
+        let HPint = parseInt(currHealthEl.innerHTML);                       //change hp to integer, accepts + and - to HP
+        HPint += change;
+        let newHP = HPint.toString();
+        currHealthEl.innerHTML = newHP;
+    }
+}
+
+function modMaxHealth(change) {
+    let HPint = parseInt(maxHealthEl.innerHTML);                       //change hp to integer, accepts + and - to HP
+    HPint += change;
+    let newHP = HPint.toString();
+    maxHealthEl.innerHTML = newHP;
+}
+
+//////////
+//control start of turn i.e. check affixes, energy regain, card draw
+//////////
+
+function turnStart(energy) {
+    function updateEnergy(energy = 3) {
+        if (energy < 0) {
+            throw new RangeError('The energy value must be either greater than or equal to 0')
+        } else {
+            return currEnergyEl.innerHTML = energy
+        }
+    }
+    function elementAnimation() {
         playDiceRollSound();
-        setTimeout(() => {
-            rollBtn.src = './assets/rollbtn-inactive.png'                           //resets button position after 50ms
-        }, 50)
-    
         rollGIF.forEach(img => {                                                    //displays x3 dice GIF at once
             img.classList.remove('inactive')
         })
-    
         if (elementsRolled.length >= 1) {
             elementImgHolder.forEach(element => {
                 element.src = ''                                                    //detects if theres any leftover elements src, if so it will remove the source attribute
@@ -79,9 +109,10 @@ function main() {
         else {
             return diceAnimationRemove();
         }
-    })
-    drawCardButtonEl()
+    }
+    yourDeck.draw(5);
+    updateEnergy(energy);
+    elementAnimation();
 }
 
-main()
 

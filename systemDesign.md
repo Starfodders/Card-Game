@@ -37,6 +37,12 @@ Example Cards - Character (Zuko)
 2. Dancing Blade (2 En, deal 2 damage and gain 3 block)
 3. Fire Lotus (3 En, deal 10 damage, gaining 1 less energy next turn)
 
+In an effort to keep my dice roll and elemental affixes, I'll add a system where whatever you roll can be added towards your card input. 
+- Fire (each fire die rolled = +1/+2/+3 damage onto each attack card). Can choose when to spend the fire dice. If use 3 dice then apply Burn (half of dmg dealt)
+- Water (each water dice rolled) will give you 1 card draw when you play next card. 3 Water dice gives you +1 card draw next round. 
+- Earth (each earth dice rolled) will give you +1/+2/+3 armor. If use 3 dice then opponent who attacks you gains weakness (1/2 damage)
+- Air (each air dice rolled) reduces energy cost of next card played. Using 3 air dice gives you +1 energy next round
+
 
 
 Terminology (Syntax)
