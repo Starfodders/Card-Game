@@ -37,13 +37,16 @@ class Deck {
             this.deck[j] = temp;
         }
         return this.deck;
+    }   
+    useCard(card) {                                                         //implement specific card choices
+        this.discardPile.push(card);
+        this.updateCounts();
     }
-    discard(card) {                                                     //maybe also be a card method?                     
-
+    discard(card) {                                                     //for cards tbat discard card
     }
-    destroy(card) {                                                     //this should be a Card method?    
+    destroy(card) {                                                     //permanently deletion  
     }
-    delete() {
+    delete() {                                                              //probably duplication from above
         console.log('delete this card from deck permanently');
     }
     updateCounts() {

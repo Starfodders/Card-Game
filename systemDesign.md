@@ -47,6 +47,8 @@ In an effort to keep my dice roll and elemental affixes, I'll add a system where
 
 Terminology (Syntax)
 - 'Your Deck'  variable refers to the active deck during the game. Later on will add more decks that can be edited but during fights, 'your deck' will always be active
+- Avatar class contains HP, Max HP, name. These things will carry on throughout different combats
+- Dynamic values like card draw, energy, buffs/debuffs are instance specific and don't need to be retained over separate combats
 
 Terminology (Design)
 - Attack cards, Tactics, and specials are all different color card backgrounds

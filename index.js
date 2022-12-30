@@ -3,9 +3,9 @@ const rollGIF = document.querySelectorAll('.rolling-animation');            //re
 const elementImgHolder = document.querySelectorAll('.elementRoll');
 const drawButtonEl = document.querySelector('#draw-button');
 const handContainerEl = document.querySelector('#hand-container');
-const currEnergyEl = document.querySelector('#current-energy');
-const currHealthEl = document.querySelector('#current-health');
-const maxHealthEl = document.querySelector('#max-health');
+// const currEnergyEl = document.querySelector('#current-energy');
+// const currHealthEl = document.querySelector('#current-health');
+// const maxHealthEl = document.querySelector('#max-health');
 
 
 
@@ -60,27 +60,12 @@ function playDiceRollSound() {                                                  
     diceAudio.play();
 }
 
-/////////////
-///// mods to stats
-/////////////
 
-function modHealth(change = null, full = false) {
-    if (full === true) {                                                    //if full heal is applied, set to true and will equalize the HP to full
-        change = parseInt(maxHealthEl.innerHTML)
-    } else {
-        let HPint = parseInt(currHealthEl.innerHTML);                       //change hp to integer, accepts + and - to HP
-        HPint += change;
-        let newHP = HPint.toString();
-        currHealthEl.innerHTML = newHP;
-    }
-}
-
-function modMaxHealth(change) {
-    let HPint = parseInt(maxHealthEl.innerHTML);                       //change hp to integer, accepts + and - to HP
-    HPint += change;
-    let newHP = HPint.toString();
-    maxHealthEl.innerHTML = newHP;
-}
+// try {
+//     modHealth(-3);
+// } catch (error) {
+//     console.log('no', error);
+// }
 
 //////////
 //control start of turn i.e. check affixes, energy regain, card draw
