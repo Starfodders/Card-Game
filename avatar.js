@@ -53,5 +53,5 @@ class Avatar {
 }
 
 const baseChar = new Avatar('bob', 30, 30)
-console.log(baseChar);
+// console.log(baseChar);
 

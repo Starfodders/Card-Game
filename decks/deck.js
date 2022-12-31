@@ -21,11 +21,13 @@ class Deck {
                 this.discardPile.length = 0;                                            //clears the discard pile
                 this.shuffle();             
                 this.updateCounts();
-                this.draw(1);                                                           
+                this.draw(1); 
+                playDrawSound();                                                          
             }
             else {
                 this.hand.push(this.deck.pop())
                 this.updateCounts()
+                playDrawSound();
             }
         }
     }
@@ -51,7 +53,7 @@ class Deck {
     }
     updateCounts() {
         deckCountEl.innerHTML = this.deck.length
-        handCountEl.innerHTML = this.hand.length
+        // handCountEl.innerHTML = this.hand.length
         discardCountEl.innerHTML = this.discardPile.length
     }
 }
@@ -61,8 +63,8 @@ class Card {
         this.name = name,
         this.cost = cost,
         this.type = type,                                       //attacks, tactics, specials
-        this.attributes = attributes                            //{attack: x, block: x, thorns: x}
-    }
+        this.attributes = attributes                           //{attack: x, block: x, thorns: x}
+        }
     onHover() {
         console.log('Listener for mouse hover, enlarges card');
     }
@@ -72,9 +74,11 @@ class Card {
     drawCard(card) {                                        //for cards that draw cards
         console.log('draw' + card + 'cards');
     }
-    destroy() {                                             //typically destroyed when USED from hand
-        console.log('card destroyed');
-    }
+}
+
+function playDrawSound() {
+    const draw = new Audio('./audio/carddraw.mp3');
+    draw.play();
 }
 
 //attacks
@@ -100,14 +104,18 @@ const allCards = [Strike, Slash, Guard, FlameWave, Barrage, BurningBlock, Track,
 const doubleCards = allCards.concat(allCards);                                          //for current purposes, double # to create a bigger deck
 
 const deckCountEl = document.querySelector('#deck-count');
-const handCountEl = document.querySelector('#hand-count');
+// const handCountEl = document.querySelector('#hand-count');
 const discardCountEl = document.querySelector('#discard-count');
 
+// const yourDeck = new Deck;
+// doubleCards.forEach(card => {
+//     yourDeck.add(card)
+// });
+
+
 const yourDeck = new Deck;
-doubleCards.forEach(card => {
-    yourDeck.add(card)
-});
-
-
+for (let i = 0; i <= 10; i++){
+    yourDeck.add(Strike)
+}
 
 

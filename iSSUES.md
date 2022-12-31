@@ -5,3 +5,8 @@ I've placed all the created cards into a single array to loop over to create a d
 
 Dec 30
 (Fix) - Change class to only Card, have property that has attribute object
+
+Dec 31
+- When creating cards, I want to reference the card drawn to display their description (which changes with each card). Trouble referencing the attributes prop within the card using THIS, it references Window instead. Need to fix
+- Mousedown event and differentiate it between a drag event. 
+- Successfully able to reset the card's position based on its inital X Y, but the eventlistener for the body remains
