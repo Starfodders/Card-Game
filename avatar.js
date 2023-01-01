@@ -1,6 +1,7 @@
 const currEnergyEl = document.querySelector('#current-energy');
-const currHealthEl = document.querySelector('#current-health');
-const maxHealthEl = document.querySelector('#max-health');
+// const currHealthEl = document.querySelector('#current-health');
+// const maxHealthEl = document.querySelector('#max-health');
+
 
 let gameOver = false;
 
@@ -20,6 +21,7 @@ class Avatar {
     fullHeal() {
         this.hp = this.maxhp
         currHealthEl.innerHTML = this.hp.toString();
+        healthBarEl.value = this.maxhp;
     }
     modHealth(change) {
         if (Number.isInteger(change) != true) {
@@ -27,15 +29,16 @@ class Avatar {
         } else {
             if (this.hp + change > this.maxhp) {                                                    //if try to heal to above max, instead heal to full
                 this.fullHeal();
-                currHealthEl.innerHTML = this.hp.toString();
             } else if (this.hp + change <= 0) {
                 this.hp = 0;
                 currHealthEl.innerHTML = this.hp.toString();
+                healthBarEl.value = this.hp;
                 toggleGameOver();
             }
             else {
                 this.hp += change;
                 currHealthEl.innerHTML = this.hp.toString();
+                healthBarEl.value = this.hp;
             }
         }
     }
@@ -47,11 +50,13 @@ class Avatar {
             maxHealthEl.innerHTML = this.maxhp.toString();              //change html                                   
             this.hp += change;                                        //modifies current HP to increase in same interval as max HP
             currHealthEl.innerHTML = this.hp.toString()
+            healthBarEl.value = this.hp;
+            healthBarEl.max = this.maxhp;
         }
     }
 
 }
 
-const baseChar = new Avatar('bob', 30, 30)
+const baseChar = new Avatar('zuko', 30, 30)
 // console.log(baseChar);
 

@@ -11,3 +11,5 @@ Right now, deck has a .useCard() method that successfully moves it into discard 
 Need to add event listeners to detect which card is being used, locate it and remove it from hand array to add to discard.
 
 Shrink card text based on its parent container
+
+Change progress bar HP to different color, not working?

@@ -101,6 +101,9 @@ h6 {
     margin: 0;
 }
 
+#health-bar {
+    color: red;
+}
 #enemy-container {
     width: 50%;
     margin: 0;

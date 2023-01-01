@@ -3,7 +3,27 @@ const elementImgHolder = document.querySelectorAll('.elementRoll');
 const drawButtonEl = document.querySelector('#draw-button');
 const handContainerEl = document.querySelector('#hand-container');
 const enemyContainerEl = document.querySelector('#enemy-container');
+const playerContainerEl = document.querySelector('#player-container')
 
+function createCharacter(char) {
+    const avatar = document.createElement('div');
+    avatar.className = 'player-avatar'
+    avatar.innerHTML = `<img src = '' alt = 'player'/>
+    <label for = 'current-health'>HP: <span id = 'avatar-hp'>${char.hp}</span></label>
+    <label for ='health-bar'>/<span id = 'avatar-max-hp'>${char.maxhp}</span></label>
+    <progress id = 'health-bar' value = '${char.hp}' max = '${char.maxhp}'>${char.hp}</progress>
+    <div id = 'player-status'>
+        <p>Status here</p>
+    </div>
+    `
+    playerContainerEl.prepend(avatar)
+    console.log(avatar);
+}
+
+createCharacter(baseChar)
+const healthBarEl = document.querySelector('#health-bar');
+const currHealthEl = document.querySelector('#avatar-hp');
+const maxHealthEl = document.querySelector('#avatar-max-hp');
 
 function cardControl(card) {                                                              //animation
     let initialX;
@@ -95,7 +115,6 @@ function createEnemyHTML(enemy) {
             <p>'status here'</p>
         </div>`
     enemyContainerEl.prepend(enemyGen);
-    console.log(enemyGen);
 }
 
 drawCardButtonEl();
