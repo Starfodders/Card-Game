@@ -2,9 +2,7 @@ const rollGIF = document.querySelectorAll('.rolling-animation');            //re
 const elementImgHolder = document.querySelectorAll('.elementRoll');
 const drawButtonEl = document.querySelector('#draw-button');
 const handContainerEl = document.querySelector('#hand-container');
-// const currEnergyEl = document.querySelector('#current-energy');
-// const currHealthEl = document.querySelector('#current-health');
-// const maxHealthEl = document.querySelector('#max-health');
+const enemyContainerEl = document.querySelector('#enemy-container');
 
 
 function cardControl(card) {                                                              //animation
@@ -40,7 +38,6 @@ function cardControl(card) {                                                    
         card.style.top = `${initialY}px`
     })
 }
-
 
 function diceAnimationRemove() {                                                //after 1s, remove GIF and getElement()
     setTimeout(() => {
@@ -84,7 +81,25 @@ function createCardHTML(card) {
     console.log(`Card drawn was ${card.name}`);
 }
 
+const enemyArray = [];                                                                      //each new enemy is added to array for easier selection;
+
+function createEnemyHTML(enemy) {
+    enemyArray.push(enemy);  
+    getEnemyIndex = enemyArray[enemyArray.length -1];                                       //gets most recent addition to the array   
+    const enemyGen = document.createElement('div');
+    enemyGen.className = 'monster-placement';
+    enemyGen.innerHTML = `<img src = '' alt ='monster'/>
+        <div class = 'enemy-status-bar'>
+            <label for = 'enemy-${getEnemyIndex}'>HP: ${enemy.hp}</label>
+            <progress id = 'enemy-${getEnemyIndex}' value = '${enemy.hp}' max = '${enemy.maxhp}'>${enemy.hp}</progress>
+            <p>'status here'</p>
+        </div>`
+    enemyContainerEl.prepend(enemyGen);
+    console.log(enemyGen);
+}
+
 drawCardButtonEl();
+createEnemyHTML(greenSlime)
 
 
 

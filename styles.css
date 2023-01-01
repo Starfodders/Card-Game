@@ -90,20 +90,18 @@ h6 {
     opacity: 0.7;
 }
 
-.character-container {
+#characters-container {
     display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
     width: 100%;
     height: 50%;
 }
 
-.player-container {
+#player-container {
     width: 50%;
     margin: 0;
 }
 
-.enemy-container {
+#enemy-container {
     width: 50%;
     margin: 0;
 }
@@ -137,6 +135,7 @@ h6 {
 #hand-container {
     height: 80%;
     width: 100%;
+    margin-top: 5%;
     display: flex;
     gap: 0;
     justify-content: center;
