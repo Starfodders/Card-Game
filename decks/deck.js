@@ -43,8 +43,11 @@ class Deck {
         }
         return this.deck;
     }   
-    useCard(card) {                                                         //implement specific card choices
+    useCard(card) {                                                         //implement specific card choices. YourDeck.useCard(yourDeck.hand[card])
         this.discardPile.push(card);
+        const whichCard = this.hand.findIndex(cards => cards.name === card.name)                //FOR NOW; removes card and element of matching card, need to remove based on mouse input
+        handContainerEl.children[whichCard].remove();                                           //removes chosen child html element   
+        this.hand.splice(whichCard,1);                                                          //removes card from hand array
         this.updateCounts();
     }
     discard(card) {                                                     //for cards tbat discard card
@@ -56,7 +59,6 @@ class Deck {
     }
     updateCounts() {
         deckCountEl.innerHTML = this.deck.length
-        // handCountEl.innerHTML = this.hand.length
         discardCountEl.innerHTML = this.discardPile.length
     }
 }
