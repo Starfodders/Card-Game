@@ -17,13 +17,7 @@ function createCharacter(char) {
     </div>
     `
     playerContainerEl.prepend(avatar)
-    console.log(avatar);
 }
-
-createCharacter(baseChar)
-const healthBarEl = document.querySelector('#health-bar');
-const currHealthEl = document.querySelector('#avatar-hp');
-const maxHealthEl = document.querySelector('#avatar-max-hp');
 
 function cardControl(card) {                                                              //animation
     let initialX;
@@ -42,7 +36,7 @@ function cardControl(card) {                                                    
         const initialMouseX = e.clientX;                                    //tracks your own cursor x,y
         const initialMouseY = e.clientY;
 
-        document.body.addEventListener('mousemove', function moveMouse(e){
+        document.body.addEventListener('mousemove', function moveMouse(e) {
             drag = true;
             const moveX = e.clientX - initialMouseX;                        //calculates difference of distance moved 
             const moveY = e.clientY - initialMouseY;
@@ -53,33 +47,38 @@ function cardControl(card) {                                                    
     })
     card.addEventListener('mouseup', (e) => {
         // console.log(drag ? 'drag': 'click');
-        console.log(initialX);
+        // console.log(initialX);
         card.style.left = `${initialX}px`
         card.style.top = `${initialY}px`
     })
 }
 
-function diceAnimationRemove() {                                                //after 1s, remove GIF and getElement()
-    setTimeout(() => {
-        getElement();
-        rollGIF.forEach(img => {
-            img.classList.add('inactive')
-        })
-    }, 1000)
-}
+// function assignHPListener() {                                            this doesn't work
+//     const getHPBars = document.querySelectorAll('progress');
+//     for (let bar of getHPBars) {
+//         bar.addEventListener('input', () => {
+//             const currHP = bar.value;
+//             const maxHP = bar.max;
+//             const quotient = currHP / maxHP;
+//             if (quotient <= 0.25) {
+//                 bar.style.backgroundColor = 'red'
+//             }
+//         })
+//     }
+// }
 
 function drawCardButtonEl() {
     drawButtonEl.addEventListener('click', () => {
         yourDeck.shuffle();
         yourDeck.draw(1)                                                        //hard coded to refer to yourDeck
-        const detectDrawnCard = yourDeck.hand[yourDeck.hand.length -1]
+        const detectDrawnCard = yourDeck.hand[yourDeck.hand.length - 1]
         createCardHTML(detectDrawnCard);
     })
 }
 
-function createCardHTML(card) {     
+function createCardHTML(card) {
     function extractAttribute() {                                                           //not great solution, but allows me to display the attributes
-        for(const att in card.attributes) {
+        for (const att in card.attributes) {
             return `${att} : ${card.attributes[att]}`
         }
     }
@@ -95,17 +94,21 @@ function createCardHTML(card) {
         <img class = 'card-art-asset' src = './assets/${card.name}.png'/>
         <div class = 'card-description'>
             <p>${descrip}</p>
-        </div>` 
-    handContainerEl.prepend(nextCard);                                                              //add to hand container
-    cardControl(nextCard)
-    console.log(`Card drawn was ${card.name}`);
+        </div>`
+    if (handContainerEl.childElementCount <= 10) {                                                     //checks to make sure theres 10 or less cards in hand
+        handContainerEl.prepend(nextCard);                                                              //add to hand container
+        cardControl(nextCard)
+        console.log(`Card drawn was ${card.name}`);
+    } else {
+        console.log('card was instead sent to discard pile');
+    }
 }
 
 const enemyArray = [];                                                                      //each new enemy is added to array for easier selection;
 
 function createEnemyHTML(enemy) {
-    enemyArray.push(enemy);  
-    getEnemyIndex = enemyArray[enemyArray.length -1];                                       //gets most recent addition to the array   
+    enemyArray.push(enemy);
+    getEnemyIndex = enemyArray[enemyArray.length - 1];                                       //gets most recent addition to the array   
     const enemyGen = document.createElement('div');
     enemyGen.className = 'monster-placement';
     enemyGen.innerHTML = `<img src = '' alt ='monster'/>
@@ -116,11 +119,6 @@ function createEnemyHTML(enemy) {
         </div>`
     enemyContainerEl.prepend(enemyGen);
 }
-
-drawCardButtonEl();
-createEnemyHTML(greenSlime)
-
-
 
 ///////////
 //Get Element IMG
@@ -146,13 +144,14 @@ function playDiceRollSound() {                                                  
     const diceAudio = new Audio('./audio/diceroll.mp3');
     diceAudio.play();
 }
-
-
-// try {
-//     modHealth(-3);
-// } catch (error) {
-//     console.log('no', error);
-// }
+function diceAnimationRemove() {                                                //after 1s, remove GIF and getElement()
+    setTimeout(() => {
+        getElement();
+        rollGIF.forEach(img => {
+            img.classList.add('inactive')
+        })
+    }, 1000)
+}
 
 //////////
 //control start of turn i.e. check affixes, energy regain, card draw
@@ -187,4 +186,15 @@ function turnStart(energy) {
     elementAnimation();
 }
 
+function main() {
+    drawCardButtonEl();
 
+    createCharacter(baseChar)
+    const healthBarEl = document.querySelector('#health-bar');
+    const currHealthEl = document.querySelector('#avatar-hp');
+    const maxHealthEl = document.querySelector('#avatar-max-hp');
+    createEnemyHTML(greenSlime)
+    // assignHPListener();
+}
+
+main();

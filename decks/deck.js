@@ -21,11 +21,14 @@ class Deck {
                 this.discardPile.length = 0;                                            //clears the discard pile
                 this.shuffle();             
                 this.updateCounts();
-                this.draw(1); 
-                playDrawSound();                                                          
+                this.draw(1);
+                playDrawSound();                 
+                //draw 5 cards, only 3 cards left in deck
+                //at instance 4, detect 0 cards so initiate reshuffle() and draw remaining
             }
             else {
                 this.hand.push(this.deck.pop())
+                createCardHTML(this.hand[i])
                 this.updateCounts()
                 playDrawSound();
             }
@@ -114,7 +117,7 @@ const discardCountEl = document.querySelector('#discard-count');
 
 
 const yourDeck = new Deck;
-for (let i = 0; i <= 10; i++){
+for (let i = 0; i <= 20; i++){
     yourDeck.add(Strike)
 }
 

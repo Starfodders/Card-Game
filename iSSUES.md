@@ -10,3 +10,6 @@ Dec 31
 - When creating cards, I want to reference the card drawn to display their description (which changes with each card). Trouble referencing the attributes prop within the card using THIS, it references Window instead. Need to fix
 - Mousedown event and differentiate it between a drag event. 
 - Successfully able to reset the card's position based on its inital X Y, but the eventlistener for the body remains
+
+Jan 02 
+- Function AssignHPListener() doesn't work to change the style of the progress bar

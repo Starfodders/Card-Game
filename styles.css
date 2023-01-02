@@ -101,9 +101,20 @@ h6 {
     margin: 0;
 }
 
-#health-bar {
-    color: red;
+progress {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 10px;
 }
+progress::-webkit-progress-bar {
+    border-radius: 100px;
+    background-color: rgb(169, 169, 168);
+}
+progress::-webkit-progress-value {
+    background-color: rgb(47, 163, 82);
+    border-radius: 100px;
+}
+
 #enemy-container {
     width: 50%;
     margin: 0;
