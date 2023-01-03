@@ -95,10 +95,25 @@ h6 {
     width: 100%;
     height: 50%;
 }
-
-#player-container {
+/* ///////////////// */
+/* Personal Character Divs */
+/* ////////////////// */
+#player-container {                                                
     width: 50%;
-    margin: 0;
+    margin-left: 10%;
+}
+.player-avatar {
+    width: 100%;
+}
+.health-values-container label{
+    position: absolute;
+    padding-left: 2em;
+    font-size: 1.5em;
+    line-height: 1.2em;
+}
+
+.energy-container {
+    width: 100%;
 }
 
 progress {
@@ -114,18 +129,43 @@ progress::-webkit-progress-value {
     background-color: rgb(47, 163, 82);
     border-radius: 100px;
 }
+/* ///////////
+/////enemy classes
+/////////// */
 
 #enemy-container {
     width: 50%;
     margin: 0;
 }
 
-.card-container {
-    width: 100%;
+.enemy-hp-values-container label{
+    position: absolute;
+    padding-left: 2em;
+    font-size: 1.5em;
 }
 
-#roll-btn {
-    margin-left: 48%;
+/* ///////////////
+dice roll
+///////////////
+/////////////// */
+.roll-container {
+    position: absolute;
+    top: 60%;
+    left: 52%;
+    transform: translate(-60%, -52%);
+    background-color: rgb(91, 88, 88);
+    /* height: 70px; */
+    padding: 0.5% 1% 1%;
+    border-radius: 8px;
+}
+.dice-container {
+    display: flex;
+}
+.dice-container-2 {
+    display: flex;
+}
+.card-container {
+    width: 100%;
 }
 
 .inactive {

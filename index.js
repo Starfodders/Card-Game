@@ -4,18 +4,20 @@ const drawButtonEl = document.querySelector('#draw-button');
 const handContainerEl = document.querySelector('#hand-container');
 const enemyContainerEl = document.querySelector('#enemy-container');
 const playerContainerEl = document.querySelector('#player-container')
+const turnStartEl = document.querySelector('#turn-start-btn')
+
 
 function createCharacter(char) {
     const avatar = document.createElement('div');
     avatar.className = 'player-avatar'
     avatar.innerHTML = `<img src = '' alt = 'player'/>
-    <label for = 'current-health'>HP: <span id = 'avatar-hp'>${char.hp}</span></label>
-    <label for ='health-bar'>/<span id = 'avatar-max-hp'>${char.maxhp}</span></label>
-    <progress id = 'health-bar' value = '${char.hp}' max = '${char.maxhp}'>${char.hp}</progress>
-    <div id = 'player-status'>
-        <p>Status here</p>
+    <div class = 'health-values-container'>
+        <label for ='health-bar'><span id ='avatar-hp'>${char.hp}</span>/<span id = 'avatar-max-hp'>${char.maxhp}</span></label>
+        <progress id = 'health-bar' value = '${char.hp}' max = '${char.maxhp}'>${char.hp}</progress>
     </div>
-    `
+    <div id = 'player-mods'>
+        <p>Status here</p>
+    </div>`
     playerContainerEl.prepend(avatar)
 }
 
@@ -69,10 +71,12 @@ function cardControl(card) {                                                    
 
 function drawCardButtonEl() {
     drawButtonEl.addEventListener('click', () => {
-        yourDeck.shuffle();
         yourDeck.draw(1)                                                        //hard coded to refer to yourDeck
-        const detectDrawnCard = yourDeck.hand[yourDeck.hand.length - 1]
-        createCardHTML(detectDrawnCard);
+    })
+}
+function turnStartButtonEl() {
+    turnStartEl.addEventListener('click', () => {
+        turnStart();
     })
 }
 
@@ -112,13 +116,28 @@ function createEnemyHTML(enemy) {
     const enemyGen = document.createElement('div');
     enemyGen.className = 'monster-placement';
     enemyGen.innerHTML = `<img src = '' alt ='monster'/>
-        <div class = 'enemy-status-bar'>
-            <label for = 'enemy-${getEnemyIndex}'>HP: ${enemy.hp}</label>
-            <progress id = 'enemy-${getEnemyIndex}' value = '${enemy.hp}' max = '${enemy.maxhp}'>${enemy.hp}</progress>
+        <div class = 'enemy-hp-values-container'>
+            <label for = 'enemy-${enemyArray.length}'>
+            <span id = enemy-${enemyArray.length}-curr-hp>${enemy.hp}</span>/${enemy.hpmax}</label>
+            <progress id = 'enemy-${enemyArray.length}-bar' value = '${enemy.hp}' max = '${enemy.hpmax}'>${enemy.hpmax}</progress>
+        </div>
+        <div class = 'enemy-mods-container'>
             <p>'status here'</p>
         </div>`
-    enemyContainerEl.prepend(enemyGen);
+    enemyContainerEl.appendChild(enemyGen);
 }
+
+// function applyEnemyHPListener() {
+//     const getHPElement = document.querySelectorAll('.enemy-hp-values-container label span');                //gets HP <span> elements
+//     for (const el of getHPElement) {
+//         el.addEventListener('input', () => {
+//             console.log('change has registered');
+//         })
+//     }
+// }
+
+
+// applyEnemyHPListener();
 
 ///////////
 //Get Element IMG
@@ -186,15 +205,22 @@ function turnStart(energy) {
     elementAnimation();
 }
 
+
 function main() {
     drawCardButtonEl();
+    turnStartButtonEl();
 
     createCharacter(baseChar)
-    const healthBarEl = document.querySelector('#health-bar');
-    const currHealthEl = document.querySelector('#avatar-hp');
-    const maxHealthEl = document.querySelector('#avatar-max-hp');
     createEnemyHTML(greenSlime)
+    createEnemyHTML(redSlime)
     // assignHPListener();
 }
 
 main();
+const healthBarEl = document.querySelector('#health-bar');
+const currHealthEl = document.querySelector('#avatar-hp');
+const maxHealthEl = document.querySelector('#avatar-max-hp');
+const getEnemyHPElement = document.querySelectorAll('.enemy-hp-values-container label span');                //gets HP <span> elements for enemies for targeting
+const getEnemyHPBarElement = document.querySelectorAll('.enemy-hp-values-container progress')               //gets progress bar elements
+
+

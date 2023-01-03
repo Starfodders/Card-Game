@@ -13,3 +13,4 @@ Dec 31
 
 Jan 02 
 - Function AssignHPListener() doesn't work to change the style of the progress bar
+- Getting TypeError: cannot read properties of undefined (reading: id) when modifying the enemy HPs. Unsure why?

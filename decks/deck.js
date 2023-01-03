@@ -43,7 +43,7 @@ class Deck {
         }
         return this.deck;
     }   
-    useCard(card) {                                                         //implement specific card choices. YourDeck.useCard(yourDeck.hand[card])
+    useCard(card) {                                                                             //implement specific card choices. YourDeck.useCard(yourDeck.hand[card])
         this.discardPile.push(card);
         const whichCard = this.hand.findIndex(cards => cards.name === card.name)                //FOR NOW; removes card and element of matching card, need to remove based on mouse input
         handContainerEl.children[whichCard].remove();                                           //removes chosen child html element   

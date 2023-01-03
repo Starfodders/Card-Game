@@ -54,7 +54,12 @@ class Avatar {
             healthBarEl.max = this.maxhp;
         }
     }
-
+    modArmour(change) {
+        if (Number.isInteger(change) != true) {
+            throw new RangeError('must be integer')
+        } else {
+        }
+    }
 }
 
 const baseChar = new Avatar('zuko', 30, 30)
