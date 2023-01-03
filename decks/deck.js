@@ -44,6 +44,20 @@ class Deck {
         return this.deck;
     }   
     useCard(card) {                                                                             //implement specific card choices. YourDeck.useCard(yourDeck.hand[card])
+        if (card.type === 'attack') {  
+            console.log('deal damage');
+            this.discardUsedCard(card)
+            enemyArray[0].takeDamage(card.attributes.damage);                                       //since unable to read this 'id' from enemy class, won;t read past it
+        } else if (card.type === 'tactic' && card.attributes.hasOwnProperty('damage') === true) {
+            console.log('cause an effect and deal damage');
+            this.discardUsedCard(card)
+
+        } else {
+            console.log('should cover all other cards which are "tactics"');
+            this.discardUsedCard(card)
+        }
+    }
+    discardUsedCard(card) {
         this.discardPile.push(card);
         const whichCard = this.hand.findIndex(cards => cards.name === card.name)                //FOR NOW; removes card and element of matching card, need to remove based on mouse input
         handContainerEl.children[whichCard].remove();                                           //removes chosen child html element   
