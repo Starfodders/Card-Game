@@ -10,6 +10,7 @@ Now working on the HTML card elements
 
 <!-- Right now, deck has a .useCard() method that successfully moves it into discard pile. However this doesn't mutate original hand array. -->
             (Fixed: added Discard function which is called after card is used)
+            
 Need to add event listeners to detect which card is being used, locate it and remove it from hand array to add to discard.
 
 Shrink card text based on its parent container

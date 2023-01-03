@@ -47,4 +47,3 @@ class Enemy {
 const greenSlime = new Enemy('green-slime', 12, 12);
 const redSlime = new Enemy('red-slime', 20, 20);
 const blueSlime = new Enemy('blue-slime', 30, 30);
-const blackSlime = new Enemy('black-slime', 40, 40);

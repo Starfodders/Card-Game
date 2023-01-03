@@ -222,7 +222,6 @@ function main() {
     createEnemyHTML(greenSlime)
     createEnemyHTML(redSlime)
     createEnemyHTML(blueSlime)
-    createEnemyHTML(blackSlime)
     // assignHPListener();
 }
 

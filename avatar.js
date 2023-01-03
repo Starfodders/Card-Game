@@ -82,5 +82,4 @@ class Avatar {
 }
 
 const baseChar = new Avatar('zuko', 30, 30)
-// console.log(baseChar);
 

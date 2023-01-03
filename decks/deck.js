@@ -53,7 +53,7 @@ class Deck {
             this.discardUsedCard(card)
 
         } else {
-            console.log('should cover all other cards which are "tactics"');
+            baseChar.modArmour(card.attributes.block)
             this.discardUsedCard(card)
         }
     }
