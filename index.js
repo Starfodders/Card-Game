@@ -10,10 +10,17 @@ const turnStartEl = document.querySelector('#turn-start-btn')
 function createCharacter(char) {
     const avatar = document.createElement('div');
     avatar.className = 'player-avatar'
-    avatar.innerHTML = `<img src = '' alt = 'player'/>
+    avatar.innerHTML = `<img src = './assets/Zuko01.gif' id='player-img' alt = 'player'/>
     <div class = 'health-values-container'>
         <label for ='health-bar'><span id ='avatar-hp'>${char.hp}</span>/<span id = 'avatar-max-hp'>${char.maxhp}</span></label>
         <progress id = 'health-bar' value = '${char.hp}' max = '${char.maxhp}'>${char.hp}</progress>
+        <div class = 'armour-container inactive'>
+            <div class = 'armour-value-container'>
+                <span id = 'player-armour-val'>${char.armour}</span>
+            </div>
+            <div class = 'armour-background'>
+            </div>
+        </div>
     </div>
     <div id = 'player-mods'>
         <p>Status here</p>
@@ -95,7 +102,7 @@ function createCardHTML(card) {
             ${card.name}
         </span>
             </div>
-        <img class = 'card-art-asset' src = './assets/${card.name}.png'/>
+        <img class = 'card-art-asset' src = './assets/Cards/${card.name}.png'/>
         <div class = 'card-description'>
             <p>${descrip}</p>
         </div>`
@@ -115,7 +122,7 @@ function createEnemyHTML(enemy) {
     getEnemyIndex = enemyArray[enemyArray.length - 1];                                       //gets most recent addition to the array   
     const enemyGen = document.createElement('div');
     enemyGen.className = 'monster-placement';
-    enemyGen.innerHTML = `<img src = '' alt ='monster'/>
+    enemyGen.innerHTML = `<img src = './assets/Slime.gif' alt ='monster'/>
         <div class = 'enemy-hp-values-container'>
             <label for = 'enemy-${enemyArray.length}'>
             <span id = enemy-${enemyArray.length}-curr-hp>${enemy.hp}</span>/${enemy.hpmax}</label>
@@ -200,6 +207,7 @@ function turnStart(energy) {
             return diceAnimationRemove();
         }
     }
+    yourDeck.shuffle();
     yourDeck.draw(5);
     updateEnergy(energy);
     elementAnimation();
@@ -213,6 +221,8 @@ function main() {
     createCharacter(baseChar)
     createEnemyHTML(greenSlime)
     createEnemyHTML(redSlime)
+    createEnemyHTML(blueSlime)
+    createEnemyHTML(blackSlime)
     // assignHPListener();
 }
 
@@ -220,7 +230,11 @@ main();
 const healthBarEl = document.querySelector('#health-bar');
 const currHealthEl = document.querySelector('#avatar-hp');
 const maxHealthEl = document.querySelector('#avatar-max-hp');
+const armourEl = document.querySelector('.armour-container');
+const playerArmourVal = document.querySelector('#player-armour-val')
 const getEnemyHPElement = document.querySelectorAll('.enemy-hp-values-container label span');                //gets HP <span> elements for enemies for targeting
 const getEnemyHPBarElement = document.querySelectorAll('.enemy-hp-values-container progress')               //gets progress bar elements
+
+
 
 

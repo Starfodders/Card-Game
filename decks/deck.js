@@ -105,7 +105,7 @@ const Strike = new Card('strike', 1, 'attack', {damage: 3})
 const Slash = new Card('slash', 2, 'attack', {damage: 7})
 
 //defenses
-const Guard = new Card('guard', 1, 'tactic', {block: 2})
+const Block = new Card('block', 1, 'tactic', {block: 2})
 
 //elementals
 const FlameWave = new Card('flame-wave', 2, 'attack', {damage: 2});
@@ -118,7 +118,7 @@ const DancingBlade = new Card('dancing-blade', 2, 'attack', {damage: 2, block: 3
 const FireLotus = new Card('fire-lotus', 3, 'attack', {damage: 10})                               //add debuff to receive 1 less energy
 
 
-const allCards = [Strike, Slash, Guard, FlameWave, Barrage, BurningBlock, Track, DancingBlade, FireLotus]
+const allCards = [Strike, Slash, Block, FlameWave, Barrage, BurningBlock, Track, DancingBlade, FireLotus]
 
 const doubleCards = allCards.concat(allCards);                                          //for current purposes, double # to create a bigger deck
 
@@ -133,8 +133,10 @@ const discardCountEl = document.querySelector('#discard-count');
 
 
 const yourDeck = new Deck;
-for (let i = 0; i <= 20; i++){
+
+for (let i = 0; i <= 10; i++){
     yourDeck.add(Strike)
+    yourDeck.add(Block)
 }
 
 

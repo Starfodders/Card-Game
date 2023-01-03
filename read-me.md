@@ -32,3 +32,14 @@ GOOD
 BAD
 - Realized that I may need to add more complexity. Neutral dice should be added? Or have basic moves that take any element? 
 - Or simplify the ENTIRE thing? Maybe just make a Zuko-based game just so I can have focus and deliver a working product?
+
+
+Jan 03 2023
+- It's been over a week of building this. Lots learned. 
+1. How much work it takes to build systems to make them scalable. However I feel I've learned a LOT about Object-Oriented Programming
+2. Nesting code that you need to run into a main() function for clarty
+3. Try/Catch errors, very useful. Logging and troubleshooting, nothing like building your own project to squish bugs.
+4. Throwing errors is also very useful, I should probably use Typescript since a lot of my thrown errors are type based
+5. I've considered switching to React several times as I think about the future for this project. I'll keep building it here though. 
+6. Updating HTMl elements is simple, updating their associated values, storing and referencing them adds a lot more layers.
+7. Before starting, I almost never used This keyword, now I use it all the time. Have a better grasp of scope and how This changes based on how its called

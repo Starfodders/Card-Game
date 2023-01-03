@@ -20,15 +20,15 @@ class Enemy {
         if (this.hp - damage <= 0) {
             this.die();
         }else {
-        this.hp -= damage;
-        // console.log(this);
-        for(let i = 0; i <= enemyArray.length; i++) {
-            if(enemyArray[i].id === this.id) {                      //why is this saying typeError id is not defined?
-                getEnemyHPElement[i].innerHTML = this.hp;
-                getEnemyHPBarElement[i].value = this.hp;
-            }
+            this.hp -= damage;
+            enemyArray.forEach((enemy) => {
+                if (enemy.id === this.id) {
+                    console.log(`Hitting ${enemy.name}`);
+                    // getEnemyHPElement[enemy].innerHTML = this.hp;
+                    // getEnemyHPBarElement[enemy].value = this.hp;                     //leave this for now, fix mouse drag
+                }
+            })
         }
-    }
     }
     heal() {
         console.log('heals a specific amount');
@@ -46,4 +46,5 @@ class Enemy {
 
 const greenSlime = new Enemy('green-slime', 12, 12);
 const redSlime = new Enemy('red-slime', 20, 20);
-
+const blueSlime = new Enemy('blue-slime', 30, 30);
+const blackSlime = new Enemy('black-slime', 40, 40);
