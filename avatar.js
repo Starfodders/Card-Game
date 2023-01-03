@@ -82,4 +82,5 @@ class Avatar {
 }
 
 const baseChar = new Avatar('zuko', 30, 30)
-
+const topIDName = document.querySelector('#top-id-name');
+topIDName.innerHTML = baseChar.name.toString();

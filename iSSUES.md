@@ -14,4 +14,3 @@ Jan 02
 <!-- - Getting TypeError: cannot read properties of undefined (reading: id) when modifying the enemy HPs. Unsure why? -->
         (Fixed Jan 03 - Changed from a For loop to a For Each applied onto EnemyArray. I'm honestly not sure why this fixed the problem)
 - When DiscardUsedCard() is called, the correct HTML element is removed. However since I'm using 'splice' and finding the first valid index, it'll remove the wrong array index typically
-
