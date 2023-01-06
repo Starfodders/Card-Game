@@ -4,6 +4,7 @@ const drawButtonEl = document.querySelector('#draw-button');
 const handContainerEl = document.querySelector('#hand-container');
 const enemyContainerEl = document.querySelector('#enemy-container');
 const playerContainerEl = document.querySelector('#player-container')
+const characterContainerEl = document.querySelector('#characters-container')
 const turnStartEl = document.querySelector('#turn-start-btn')
 
 
@@ -28,11 +29,8 @@ function createCharacter(char) {
     playerContainerEl.prepend(avatar)
 }
 
-function cardControl(card) {                                                              //animation
+function cardControl(card) {                                                              
     let seletedCard;
-    let initialX = card.getBoundingClientRect().left;
-    let initialY = card.getBoundingClientRect().top; 
-    console.log(initialX);    
     let moveMouseListener;
     card.addEventListener('mouseover', () => {                                  
         card.style.transform = `translate(0, ${-50}px)`
@@ -41,52 +39,65 @@ function cardControl(card) {                                                    
         card.style.removeProperty('transform')
     })
     card.addEventListener('mousedown', (e) => {                             //gets event values of card initial X,Y
-        // selectedCard = e.target;
+        selectedCard = e.target;
         // console.log('down');
-        initialCardX = e.offsetX;                                                   //x, y towards card border (0,0 is top-left corner)
-        initialCardY = e.offsetY;   
-        // console.log(initialCardX + ' card click x');
+        let initialCardX = e.offsetX;                                                   //x, y towards card border (0,0 is top-left corner)
+        let initialCardY = e.offsetY;   
         const initialMouseX = e.clientX;                                                    //sets initial click based on viewport
         const initialMouseY = e.clientY;
-        // console.log(initialMouseX + ' mouse click x');
 
         document.body.addEventListener('mousemove', moveMouseListener = function moveMouse(e) {
-            if (isMousePressed = true) {
             const moveX = e.clientX - initialMouseX;
             const moveY = e.clientY - initialMouseY;
             card.style.left = `${initialCardX + moveX}px`                                //sets new position constantly, only works w/ non-static position
             card.style.top = `${initialCardY + moveY}px`
+            })
+        document.body.addEventListener('mouseup', (e) => {
+            if (e.clientY > 500) {
+                document.body.removeEventListener('mousemove', moveMouseListener);
+                card.style.left = 0;
+                card.style.top = 0;
+                console.log('card returned to original hand position');
+            } else {
+                console.log('card is moving onto phase 2 of play');
+                document.body.removeEventListener('mousemove', moveMouseListener);
+                selectIndicator(e);
+                selectedCard.style.display = 'none'
             }
         })
     })
-    card.addEventListener('mouseup', (e) => {
+    card.addEventListener('mouseup', () => {
         document.body.removeEventListener('mousemove', moveMouseListener);
-        // console.log('up');
-        card.style.left = `${initialX}px`;
-        card.style.top = `${initialY}px`;
-        console.log(card.getBoundingClientRect().left + ' ending X');
-    })
-    document.body.addEventListener('mouseup', (e) => {
-        if (e.clientY > 500) {
-            console.log('above 500, return card to hand');
-        } else {
-            selectedCard.classList.add('inactive');
-            selectIndicator();
-            console.log('below 500, change cursor to selector');
-            console.log('currently selected card will be hidden, so will cursor');
-        }
+        console.log('up');
+        card.style.left = 0;
+        card.style.top = 0;
     })
 }
-function selectIndicator() {
+function selectIndicator(location) {
+    // console.log(location);
     const picker = document.createElement('div');
     picker.classList = 'chooser';
     picker.innerHTML = `<img src = './assets/cursor-xxl.png'>`;
-    document.body.addEventListener('mousemove', (e) => {
+    picker.style.left = location.screenX;
+    picker.style.top = location.screenY;
+    characterContainerEl.append(picker);
 
-    })
-    handContainerEl.append(picker);
+    document.body.addEventListener('mousemove', followMouse);
+    followMouse();
+    function followMouse(e) {
+        let x, y;
+        if (!e) {
+            x = window.event.clientX;
+            y = window.event.clientY;
+        } else {
+            x = e.clientX;
+            y = e.clientY;
+        }
+
+        picker.style.left = `${x}px`;
+        picker.style.top = `${y}px`;
+    }
 }
-
 // function assignHPListener() {                                            this doesn't work
 //     const getHPBars = document.querySelectorAll('progress');
 //     for (let bar of getHPBars) {
@@ -134,7 +145,7 @@ function createCardHTML(card) {
     if (handContainerEl.childElementCount <= 10) {                                                     //checks to make sure theres 10 or less cards in hand
         handContainerEl.prepend(nextCard);                                                              //add to hand container
         cardControl(nextCard)
-        console.log(`Card drawn was ${card.name}`);
+        // console.log(`Card drawn was ${card.name}`);
     } else {
         console.log('card was instead sent to discard pile');
     }
@@ -144,7 +155,7 @@ const enemyArray = [];                                                          
 
 function createEnemyHTML(enemy) {
     enemyArray.push(enemy);
-    getEnemyIndex = enemyArray[enemyArray.length - 1];                                       //gets most recent addition to the array   
+    // const getEnemyIndex = enemyArray[enemyArray.length - 1];                                       //gets most recent addition to the array   
     const enemyGen = document.createElement('div');
     enemyGen.className = 'monster-placement';
     enemyGen.innerHTML = `<img src = './assets/Slime.gif' alt ='monster'/>

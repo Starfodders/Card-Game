@@ -80,6 +80,10 @@ h6 {
     font-family: Arial, Helvetica, sans-serif;
     color: white;
 }
+
+::selection {
+    background: transparent;
+}
 body {
     background-color: rgb(109, 61, 61);
 }
@@ -89,6 +93,8 @@ button {
 .chooser {
     cursor: none;
     position: absolute;
+    width: 50px;
+    height: 50px;
 }
 .wrapper {
 }
