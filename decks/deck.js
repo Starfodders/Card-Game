@@ -64,9 +64,15 @@ class Deck {
         this.hand.splice(whichCard,1);                                                          //removes card from hand array
         this.updateCounts();
     }
-    discard(card) {                                                     //for cards tbat discard card
-    }
-    destroy(card) {                                                     //permanently deletion  
+    // discard(card) {                                                     //for cards tbat discard card
+    // }
+    destroy(card) {                                                     //permanently deletion 
+        this.hand.splice(card, 1);
+        this.destroyedCards.push(card);
+        const whichCard = this.hand.findIndex(cards => cards.name === card.name)           
+        handContainerEl.children[whichCard].remove();
+        destroyCountEl.innerHTML = this.destroyedCards.length;
+        return this.hand;
     }
     delete() {                                                              //probably duplication from above
         console.log('delete this card from deck permanently');
@@ -123,8 +129,8 @@ const allCards = [Strike, Slash, Block, FlameWave, Barrage, BurningBlock, Track,
 const doubleCards = allCards.concat(allCards);                                          //for current purposes, double # to create a bigger deck
 
 const deckCountEl = document.querySelector('#deck-count');
-// const handCountEl = document.querySelector('#hand-count');
 const discardCountEl = document.querySelector('#discard-count');
+const destroyCountEl = document.querySelector('#destroy-count');
 
 // const yourDeck = new Deck;
 // doubleCards.forEach(card => {

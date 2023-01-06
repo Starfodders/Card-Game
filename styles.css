@@ -81,12 +81,15 @@ h6 {
     color: white;
 }
 body {
-    background-color: rgb(109, 61, 61)
+    background-color: rgb(109, 61, 61);
 }
 button {
     color: black;
 }
-
+.chooser {
+    cursor: none;
+    position: absolute;
+}
 .wrapper {
 }
 .top-container {
@@ -171,7 +174,7 @@ progress::-webkit-progress-value {
     background-color: rgb(82, 82, 82);
     position: absolute;
     top: 2%;
-    z-index: -5;
+    z-index: -2;
     border-radius: 10px;
 }
 /* ///////////
@@ -275,6 +278,8 @@ dice roll
 #discard-container {
     max-width: 10%;
 }
+
+
 
 
 /* Card Formating */

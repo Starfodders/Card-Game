@@ -29,37 +29,62 @@ function createCharacter(char) {
 }
 
 function cardControl(card) {                                                              //animation
-    let initialX;
-    let initialY;                                                               //initial values to pass on
-    let drag = false                                                           //default set to non-drag
-    card.addEventListener('mouseover', () => {                                  //hover effect to show which card being considered
+    let seletedCard;
+    let initialX = card.getBoundingClientRect().left;
+    let initialY = card.getBoundingClientRect().top; 
+    console.log(initialX);    
+    let moveMouseListener;
+    card.addEventListener('mouseover', () => {                                  
         card.style.transform = `translate(0, ${-50}px)`
     })
-    card.addEventListener('mouseout', () => {                                //return to baseline
+    card.addEventListener('mouseout', () => {                                
         card.style.removeProperty('transform')
     })
     card.addEventListener('mousedown', (e) => {                             //gets event values of card initial X,Y
-        console.log('mouse is clicked');
-        initialX = e.offsetX;
-        initialY = e.offsetY;
-        const initialMouseX = e.clientX;                                    //tracks your own cursor x,y
+        // selectedCard = e.target;
+        // console.log('down');
+        initialCardX = e.offsetX;                                                   //x, y towards card border (0,0 is top-left corner)
+        initialCardY = e.offsetY;   
+        // console.log(initialCardX + ' card click x');
+        const initialMouseX = e.clientX;                                                    //sets initial click based on viewport
         const initialMouseY = e.clientY;
+        // console.log(initialMouseX + ' mouse click x');
 
-        document.body.addEventListener('mousemove', function moveMouse(e) {
-            drag = true;
-            const moveX = e.clientX - initialMouseX;                        //calculates difference of distance moved 
+        document.body.addEventListener('mousemove', moveMouseListener = function moveMouse(e) {
+            if (isMousePressed = true) {
+            const moveX = e.clientX - initialMouseX;
             const moveY = e.clientY - initialMouseY;
-
-            card.style.left = `${initialX + moveX}px`                       //sets new position constantly, only works w/ non-static position
-            card.style.top = `${initialY + moveY}px`
+            card.style.left = `${initialCardX + moveX}px`                                //sets new position constantly, only works w/ non-static position
+            card.style.top = `${initialCardY + moveY}px`
+            }
         })
     })
     card.addEventListener('mouseup', (e) => {
-        // console.log(drag ? 'drag': 'click');
-        // console.log(initialX);
-        card.style.left = `${initialX}px`
-        card.style.top = `${initialY}px`
+        document.body.removeEventListener('mousemove', moveMouseListener);
+        // console.log('up');
+        card.style.left = `${initialX}px`;
+        card.style.top = `${initialY}px`;
+        console.log(card.getBoundingClientRect().left + ' ending X');
     })
+    document.body.addEventListener('mouseup', (e) => {
+        if (e.clientY > 500) {
+            console.log('above 500, return card to hand');
+        } else {
+            selectedCard.classList.add('inactive');
+            selectIndicator();
+            console.log('below 500, change cursor to selector');
+            console.log('currently selected card will be hidden, so will cursor');
+        }
+    })
+}
+function selectIndicator() {
+    const picker = document.createElement('div');
+    picker.classList = 'chooser';
+    picker.innerHTML = `<img src = './assets/cursor-xxl.png'>`;
+    document.body.addEventListener('mousemove', (e) => {
+
+    })
+    handContainerEl.append(picker);
 }
 
 // function assignHPListener() {                                            this doesn't work
@@ -96,7 +121,7 @@ function createCardHTML(card) {
     const descrip = extractAttribute();
 
     const nextCard = document.createElement('div');                                         //create new div element
-    nextCard.className = `${card.type}`
+    nextCard.className = `${card.type} draggable = true`
     nextCard.innerHTML = `<div class = 'card-element-top'>
         <span class = 'name-block'>
             ${card.name}
