@@ -6,6 +6,7 @@ const enemyContainerEl = document.querySelector('#enemy-container');
 const playerContainerEl = document.querySelector('#player-container')
 const characterContainerEl = document.querySelector('#characters-container')
 const turnStartEl = document.querySelector('#turn-start-btn')
+let sheet = document.styleSheets[0];
 
 
 function createCharacter(char) {
@@ -32,72 +33,97 @@ function createCharacter(char) {
 function cardControl(card) {                                                              
     let seletedCard;
     let moveMouseListener;
+    let moveMouseListenerUp;
+    //hover effect and reset
     card.addEventListener('mouseover', () => {                                  
         card.style.transform = `translate(0, ${-50}px)`
     })
     card.addEventListener('mouseout', () => {                                
         card.style.removeProperty('transform')
     })
-    card.addEventListener('mousedown', (e) => {                             //gets event values of card initial X,Y
-        selectedCard = e.target;
-        // console.log('down');
-        let initialCardX = e.offsetX;                                                   //x, y towards card border (0,0 is top-left corner)
+    //click and drag effect
+    card.addEventListener('mousedown', (e) => {                                             //gets event values of card initial X,Y
+        selectedCard = e.target;                                            
+        let initialCardX = e.offsetX;                                                         //x, y towards card border (0,0 is top-left corner)
         let initialCardY = e.offsetY;   
-        const initialMouseX = e.clientX;                                                    //sets initial click based on viewport
+        const initialMouseX = e.clientX;                                                     //sets initial click based on viewport
         const initialMouseY = e.clientY;
 
         document.body.addEventListener('mousemove', moveMouseListener = function moveMouse(e) {
             const moveX = e.clientX - initialMouseX;
             const moveY = e.clientY - initialMouseY;
-            card.style.left = `${initialCardX + moveX}px`                                //sets new position constantly, only works w/ non-static position
+            card.style.left = `${initialCardX + moveX}px`                                
             card.style.top = `${initialCardY + moveY}px`
             })
-        document.body.addEventListener('mouseup', (e) => {
+    //determine if card is being used in active play area or in hand container
+        document.body.addEventListener('mouseup', moveMouseListenerUp = function moveMouseUp(e) {{
+            document.body.removeEventListener('mousemove', moveMouseListener);
             if (e.clientY > 500) {
-                document.body.removeEventListener('mousemove', moveMouseListener);
                 card.style.left = 0;
                 card.style.top = 0;
-                console.log('card returned to original hand position');
+                document.body.removeEventListener('mouseup', moveMouseListenerUp)                   //after release, remove the listener too to prevent cycling
             } else {
-                console.log('card is moving onto phase 2 of play');
-                document.body.removeEventListener('mousemove', moveMouseListener);
-                selectIndicator(e);
-                selectedCard.style.display = 'none'
+                selectIndicator(selectedCard);                                                          //passes e.target in
+                document.body.removeEventListener('mouseup', moveMouseListenerUp)
             }
-        })
+        }}
+        )
     })
-    card.addEventListener('mouseup', () => {
-        document.body.removeEventListener('mousemove', moveMouseListener);
-        console.log('up');
-        card.style.left = 0;
-        card.style.top = 0;
-    })
-}
-function selectIndicator(location) {
-    // console.log(location);
-    const picker = document.createElement('div');
-    picker.classList = 'chooser';
-    picker.innerHTML = `<img src = './assets/cursor-xxl.png'>`;
-    picker.style.left = location.screenX;
-    picker.style.top = location.screenY;
-    characterContainerEl.append(picker);
-
-    document.body.addEventListener('mousemove', followMouse);
-    followMouse();
-    function followMouse(e) {
-        let x, y;
-        if (!e) {
-            x = window.event.clientX;
-            y = window.event.clientY;
-        } else {
-            x = e.clientX;
-            y = e.clientY;
+    function selectIndicator(card) {
+        //get the Index based on the HTML card selected
+        function getCardIndex() {
+            for (let i = 0; i < card.parentNode.children.length; i++) {
+                if (card === card.parentNode.children.item(i)) {
+                    return i
+                }
+            }
         }
-
-        picker.style.left = `${x}px`;
-        picker.style.top = `${y}px`;
+        //render the picker, hide the card, and make picker follow your mouse
+        const picker = document.createElement('div');
+        picker.classList = 'chooser';
+        picker.innerHTML = `<img src = './assets/cursor-xxl.png'>`;
+        characterContainerEl.append(picker);
+        card.style.display = 'none';
+        //follows mouse position and updates HTML graphic
+        document.body.addEventListener('mousemove', followMouse);
+        followMouse();
+        function followMouse(e) {
+            let x, y;
+            if (!e) {
+                x = window.event.clientX;
+                y = window.event.clientY;
+            } else {
+                x = e.clientX;
+                y = e.clientY;
+            }
+    
+            picker.style.left = `${x}px`;
+            picker.style.top = `${y}px`;
+        }
+        //functionality for left and right clicks. Left = use, Right = cancel 
+        const pickerEl = document.querySelector('.chooser')
+        picker.addEventListener('mousedown', (e) => {
+            switch(e.button) {
+                case 0:
+                    yourDeck.useCard(yourDeck.hand[getCardIndex()]);
+                    console.log(getCardIndex());
+                    // console.log('card being removed is');
+                    card.remove();                                                                              //removes HTML element
+                    pickerEl.remove();
+                    break;
+                case 2:
+                    pickerEl.remove();
+                    card.style.removeProperty('display')
+                    card.style.left = 0;
+                    card.style.top = 0;
+                    break;
+                default:
+                    console.log('unknown button');
+            }   
+        })
     }
 }
+
 // function assignHPListener() {                                            this doesn't work
 //     const getHPBars = document.querySelectorAll('progress');
 //     for (let bar of getHPBars) {
@@ -132,7 +158,7 @@ function createCardHTML(card) {
     const descrip = extractAttribute();
 
     const nextCard = document.createElement('div');                                         //create new div element
-    nextCard.className = `${card.type} draggable = true`
+    nextCard.className = `${card.type}`
     nextCard.innerHTML = `<div class = 'card-element-top'>
         <span class = 'name-block'>
             ${card.name}
@@ -143,13 +169,13 @@ function createCardHTML(card) {
             <p>${descrip}</p>
         </div>`
     if (handContainerEl.childElementCount <= 10) {                                                     //checks to make sure theres 10 or less cards in hand
-        handContainerEl.prepend(nextCard);                                                              //add to hand container
+        handContainerEl.appendChild(nextCard);                                                              //add to hand container
         cardControl(nextCard)
-        // console.log(`Card drawn was ${card.name}`);
     } else {
         console.log('card was instead sent to discard pile');
     }
 }
+
 
 const enemyArray = [];                                                                      //each new enemy is added to array for easier selection;
 
@@ -168,7 +194,15 @@ function createEnemyHTML(enemy) {
             <p>'status here'</p>
         </div>`
     enemyContainerEl.appendChild(enemyGen);
+
+    enemyGen.addEventListener('mouseover', () => {
+            if (document.body.querySelector(':has(.chooser)') != null) {
+            sheet.insertRule('.enemy-hp-values-container:hover::before {content: url("./assets/cursor-xxl.png"); position: absolute; display: inline; width: 30px; height: 30px;}')
+        }
+    })
 }
+//WORKING ON THIS! //////////////////////////////////////////
+
 
 // function applyEnemyHPListener() {
 //     const getHPElement = document.querySelectorAll('.enemy-hp-values-container label span');                //gets HP <span> elements

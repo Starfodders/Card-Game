@@ -6,8 +6,9 @@ I've placed all the created cards into a single array to loop over to create a d
 
 Dec 31
 - When creating cards, I want to reference the card drawn to display their description (which changes with each card). Trouble referencing the attributes prop within the card using THIS, it references Window instead. Need to fix
-- Mousedown event and differentiate it between a drag event. 
-- Successfully able to reset the card's position based on its inital X Y, but the eventlistener for the body remains
+<!-- - Mousedown event and differentiate it between a drag event.  -->
+<!-- - Successfully able to reset the card's position based on its inital X Y, but the eventlistener for the body remains -->
+        (Fixed Jan 06 - see below)
 
 Jan 02 
 - Function AssignHPListener() doesn't work to change the style of the progress bar
@@ -16,5 +17,10 @@ Jan 02
 - When DiscardUsedCard() is called, the correct HTML element is removed. However since I'm using 'splice' and finding the first valid index, it'll remove the wrong array index typically
 
 Jan 05 
-- Still working on mousedrag. Successfully removed event listener for the card following the cursor on mouseup.
-- Trying to reset the card to its initial position on mouseup, however the mousemove listener is being run and its value is being considered, sending the element erroneously.
+<!-- - Still working on mousedrag. Successfully removed event listener for the card following the cursor on mouseup. -->
+        (Fixed Jan 06 - successful release on drag, attached the listener to body instead)
+<!-- - Trying to reset the card to its initial position on mouseup, however the mousemove listener is being run and its value is being considered, sending the element erroneously. -->
+        (Fixed Jan 06 - needed to reset initial X Y to 0, not to equal the values. The latter adds these values to left/right, which is why it was not working as intended)
+
+Jan 07 
+- Enemy.takeDamage() does not update the HTML element properly.

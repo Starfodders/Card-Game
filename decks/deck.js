@@ -59,9 +59,7 @@ class Deck {
     }
     discardUsedCard(card) {
         this.discardPile.push(card);
-        const whichCard = this.hand.findIndex(cards => cards.name === card.name)                //FOR NOW; removes card and element of matching card, need to remove based on mouse input
-        handContainerEl.children[whichCard].remove();                                           //removes chosen child html element   
-        this.hand.splice(whichCard,1);                                                          //removes card from hand array
+        this.hand.splice(card,1);                                                                       //removes card from hand array since push doesn't mutate
         this.updateCounts();
     }
     // discard(card) {                                                     //for cards tbat discard card

@@ -192,6 +192,7 @@ progress::-webkit-progress-value {
     margin-top: 10%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    column-gap: 5%;
 }
 #enemy-container div:nth-child(odd) {
     margin-top: 25%;
@@ -200,13 +201,15 @@ progress::-webkit-progress-value {
     width: 100%;
     transform: scaleX(-1)
 }
-
+    
 
 .enemy-hp-values-container label{
     position: absolute;
     padding-left: 2em;
     font-size: 1.5em;
 }
+
+
 
 /* ///////////////
 dice roll
@@ -233,6 +236,9 @@ dice roll
 }
 
 .inactive {
+    display: none;
+}
+.card-inactive {
     display: none;
 }
 
