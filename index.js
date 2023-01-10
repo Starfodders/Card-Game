@@ -63,7 +63,7 @@ function cardControl(card) {
                 card.style.top = 0;
                 document.body.removeEventListener('mouseup', moveMouseListenerUp)                   //after release, remove the listener too to prevent cycling
             } else {
-                selectIndicator(selectedCard); 
+                selectIndicator(selectedCard);
                 document.body.removeEventListener('mouseup', moveMouseListenerUp)
             }
         }}
@@ -74,7 +74,6 @@ function cardControl(card) {
         function getCardIndex() {
             for (let i = 0; i < card.parentNode.children.length; i++) {
                 if (card === card.parentNode.children.item(i)) {
-                    console.log(i);
                     return i
                 }
             }
@@ -106,12 +105,12 @@ function cardControl(card) {
         picker.addEventListener('mousedown', (e) => {
             switch(e.button) {
                 case 0:
-                    console.log(yourDeck.hand[getCardIndex()]);
+                    // console.log(yourDeck.hand[getCardIndex()]);
                     const pickedCard = yourDeck.hand[getCardIndex()];
                     // console.log(card);
                     // console.log(`${getCardIndex()} is index, ${pickedCard.name} is being selected and used`);
                     // console.log(`${pickedCard.name} in picker`);
-                    yourDeck.useCard(pickedCard);
+                    yourDeck.useCard(pickedCard, getEnemyChoice);
                     card.remove();                                                                              //removes HTML element
                     // console.log('card being removed');
                     pickerEl.remove();
@@ -199,15 +198,13 @@ function createEnemyHTML(enemy) {
         </div>`
     enemyContainerEl.appendChild(enemyGen);
 
-    enemyGen.addEventListener('mouseover', () => {
+    enemyGen.addEventListener('mouseover', (e) => {
             if (document.body.querySelector(':has(.chooser)') != null) {
             // sheet.insertRule('.enemy-hp-values-container:hover::before {content: url("./assets/cursor-xxl.png"); position: absolute; display: inline; width: 30px; height: 30px;}')
-            return enemy.id
+            getEnemyChoice(enemy.id)
         }
     })
 }
-//WORKING ON THIS! //////////////////////////////////////////
-
 
 // function applyEnemyHPListener() {
 //     const getHPElement = document.querySelectorAll('.enemy-hp-values-container label span');                //gets HP <span> elements
