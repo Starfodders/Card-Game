@@ -43,7 +43,7 @@ function cardControl(card) {
     })
     //click and drag effect
     card.addEventListener('mousedown', (e) => {                                             //gets event values of card initial X,Y
-        selectedCard = e.target;                                            
+        selectedCard = e.target; 
         let initialCardX = e.offsetX;                                                         //x, y towards card border (0,0 is top-left corner)
         let initialCardY = e.offsetY;   
         const initialMouseX = e.clientX;                                                     //sets initial click based on viewport
@@ -63,7 +63,7 @@ function cardControl(card) {
                 card.style.top = 0;
                 document.body.removeEventListener('mouseup', moveMouseListenerUp)                   //after release, remove the listener too to prevent cycling
             } else {
-                selectIndicator(selectedCard);                                                          //passes e.target in
+                selectIndicator(selectedCard); 
                 document.body.removeEventListener('mouseup', moveMouseListenerUp)
             }
         }}
@@ -74,6 +74,7 @@ function cardControl(card) {
         function getCardIndex() {
             for (let i = 0; i < card.parentNode.children.length; i++) {
                 if (card === card.parentNode.children.item(i)) {
+                    console.log(i);
                     return i
                 }
             }
@@ -105,10 +106,14 @@ function cardControl(card) {
         picker.addEventListener('mousedown', (e) => {
             switch(e.button) {
                 case 0:
-                    yourDeck.useCard(yourDeck.hand[getCardIndex()]);
-                    console.log(getCardIndex());
-                    // console.log('card being removed is');
+                    console.log(yourDeck.hand[getCardIndex()]);
+                    const pickedCard = yourDeck.hand[getCardIndex()];
+                    // console.log(card);
+                    // console.log(`${getCardIndex()} is index, ${pickedCard.name} is being selected and used`);
+                    // console.log(`${pickedCard.name} in picker`);
+                    yourDeck.useCard(pickedCard);
                     card.remove();                                                                              //removes HTML element
+                    // console.log('card being removed');
                     pickerEl.remove();
                     break;
                 case 2:
@@ -156,7 +161,6 @@ function createCardHTML(card) {
         }
     }
     const descrip = extractAttribute();
-
     const nextCard = document.createElement('div');                                         //create new div element
     nextCard.className = `${card.type}`
     nextCard.innerHTML = `<div class = 'card-element-top'>
@@ -197,7 +201,8 @@ function createEnemyHTML(enemy) {
 
     enemyGen.addEventListener('mouseover', () => {
             if (document.body.querySelector(':has(.chooser)') != null) {
-            sheet.insertRule('.enemy-hp-values-container:hover::before {content: url("./assets/cursor-xxl.png"); position: absolute; display: inline; width: 30px; height: 30px;}')
+            // sheet.insertRule('.enemy-hp-values-container:hover::before {content: url("./assets/cursor-xxl.png"); position: absolute; display: inline; width: 30px; height: 30px;}')
+            return enemy.id
         }
     })
 }
@@ -232,7 +237,7 @@ function getElement() {
         elementsRolled.push(elementList[diceRoll()])                            //pushes roll into the array
         elementImgHolder[i].src = `/assets/${elementsRolled[i]}.png`                 //changes the src of the elementRoll to whatever index we dice rolled onto
     }
-    console.log(elementsRolled);
+    // console.log(elementsRolled);
     return elementsRolled;
 }
 

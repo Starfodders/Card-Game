@@ -22,15 +22,16 @@ class Deck {
                 this.shuffle();             
                 this.updateCounts();
                 this.draw(1);
-                playDrawSound();                 
+                soundObj.playDrawSound();                 
                 //draw 5 cards, only 3 cards left in deck
                 //at instance 4, detect 0 cards so initiate reshuffle() and draw remaining
             }
             else {
-                this.hand.push(this.deck.pop())
-                createCardHTML(this.hand[i])
+                const drawnCard = this.deck.pop()
+                this.hand.push(drawnCard)
+                createCardHTML(drawnCard)
                 this.updateCounts()
-                playDrawSound();
+                soundObj.playDrawSound();
             }
         }
     }
@@ -43,18 +44,24 @@ class Deck {
         }
         return this.deck;
     }   
-    useCard(card) {                                                                             //implement specific card choices. YourDeck.useCard(yourDeck.hand[card])
+    useCard(card) {    
+        console.log(card);                                                                         //implement specific card choices. YourDeck.useCard(yourDeck.hand[card])
         if (card.type === 'attack') {  
-            console.log('deal damage');
+            // console.log('Played an attack');
+            soundObj.playAttackSound();
             this.discardUsedCard(card)
             enemyArray[0].takeDamage(card.attributes.damage);                                       //since unable to read this 'id' from enemy class, won;t read past it
         } else if (card.type === 'tactic' && card.attributes.hasOwnProperty('damage') === true) {
-            console.log('cause an effect and deal damage');
+            // console.log('cause an effect and deal damage');
+            soundObj.playAttackSound();
             this.discardUsedCard(card)
 
         } else {
             baseChar.modArmour(card.attributes.block)
+            // console.log('Blocked');
+            soundObj.playGuardSound()
             this.discardUsedCard(card)
+
         }
     }
     discardUsedCard(card) {
@@ -99,10 +106,29 @@ class Card {
     }
 }
 
-function playDrawSound() {
-    const draw = new Audio('./audio/carddraw.mp3');
-    draw.play();
-}
+// function playDrawSound() {
+//     const draw = new Audio('./audio/carddraw.mp3');
+//     draw.play();
+// }
+// function playAttackSound() {
+//     const atk = new Audio('./audio/attackSound.mp3');
+//     atk.play();
+// }
+
+const soundObj = {
+    playDrawSound() {
+        const draw = new Audio('./audio/carddraw.mp3');
+        draw.play();
+    },
+    playAttackSound() {
+        const atk = new Audio('./audio/attackSound.mp3');
+        atk.play();
+    },
+    playGuardSound() {
+        const  block = new Audio('./audio/shield.mp3');
+        block.play();
+    }
+}   
 
 //attacks
 const Strike = new Card('strike', 1, 'attack', {damage: 3})

@@ -24,3 +24,7 @@ Jan 05
 
 Jan 07 
 - Enemy.takeDamage() does not update the HTML element properly.
+
+Jan 10
+- When using 'block' first, the next move will always be BLOCK even if it's not. This bug doesn't exist for attack, then block. However this works if played from 0 -> 5 index, not descending?
+- Also if enemy dies with an attack, the card is removed from hand but the HTML element remains
