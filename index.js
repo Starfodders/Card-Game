@@ -25,7 +25,7 @@ function createCharacter(char) {
         </div>
     </div>
     <div id = 'player-mods'>
-        <p>Status here</p>
+        <p></p>
     </div>`
     playerContainerEl.prepend(avatar)
 }
@@ -104,15 +104,11 @@ function cardControl(card) {
         const pickerEl = document.querySelector('.chooser')
         picker.addEventListener('mousedown', (e) => {
             switch(e.button) {
-                case 0:
-                    // console.log(yourDeck.hand[getCardIndex()]);
-                    const pickedCard = yourDeck.hand[getCardIndex()];
-                    // console.log(card);
-                    // console.log(`${getCardIndex()} is index, ${pickedCard.name} is being selected and used`);
-                    // console.log(`${pickedCard.name} in picker`);
-                    yourDeck.useCard(pickedCard, getEnemyChoice);
+                case 0: 
+                    let cardIndex = getCardIndex()
+                    const pickedCard = yourDeck.hand[cardIndex];
+                    yourDeck.useCard(pickedCard, cardIndex);
                     card.remove();                                                                              //removes HTML element
-                    // console.log('card being removed');
                     pickerEl.remove();
                     break;
                 case 2:
@@ -150,6 +146,7 @@ function drawCardButtonEl() {
 function turnStartButtonEl() {
     turnStartEl.addEventListener('click', () => {
         turnStart();
+        console.log(yourDeck.hand);
     })
 }
 
@@ -179,11 +176,9 @@ function createCardHTML(card) {
     }
 }
 
-
 const enemyArray = [];                                                                      //each new enemy is added to array for easier selection;
 
 function createEnemyHTML(enemy) {
-    enemyArray.push(enemy);
     // const getEnemyIndex = enemyArray[enemyArray.length - 1];                                       //gets most recent addition to the array   
     const enemyGen = document.createElement('div');
     enemyGen.className = 'monster-placement';
@@ -197,14 +192,16 @@ function createEnemyHTML(enemy) {
             <p>'status here'</p>
         </div>`
     enemyContainerEl.appendChild(enemyGen);
+    enemyArray.push(enemy);
 
     enemyGen.addEventListener('mouseover', (e) => {
             if (document.body.querySelector(':has(.chooser)') != null) {
             // sheet.insertRule('.enemy-hp-values-container:hover::before {content: url("./assets/cursor-xxl.png"); position: absolute; display: inline; width: 30px; height: 30px;}')
-            getEnemyChoice(enemy.id)
+            // getEnemyChoice(enemy.id)
         }
     })
 }
+
 
 // function applyEnemyHPListener() {
 //     const getHPElement = document.querySelectorAll('.enemy-hp-values-container label span');                //gets HP <span> elements
@@ -256,7 +253,7 @@ function diceAnimationRemove() {                                                
 //////////
 
 function turnStart(energy) {
-    function updateEnergy(energy = 3) {
+    function updateEnergy(energy = 6) {
         if (energy < 0) {
             throw new RangeError('The energy value must be either greater than or equal to 0')
         } else {
@@ -305,7 +302,8 @@ const armourEl = document.querySelector('.armour-container');
 const playerArmourVal = document.querySelector('#player-armour-val')
 const getEnemyHPElement = document.querySelectorAll('.enemy-hp-values-container label span');                //gets HP <span> elements for enemies for targeting
 const getEnemyHPBarElement = document.querySelectorAll('.enemy-hp-values-container progress')               //gets progress bar elements
-
+const enemyHPElArray = Array.from(getEnemyHPElement);
+const enemyHPBarElArray = Array.from(getEnemyHPBarElement);
 
 
 

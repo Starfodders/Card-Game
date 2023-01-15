@@ -22,29 +22,23 @@ class Enemy {
             this.die();
         }else {
             this.hp -= damage;
-            enemyArray.forEach((enemy) => {
-                if (enemy.id === this.id) {
-                    // console.log(`Hitting ${enemy.name}`);
-                    // getEnemyHPElement[enemy].innerHTML = this.hp;
-                    // getEnemyHPBarElement[enemy].value = this.hp;                     //leave this for now, fix mouse drag
-                }
-            })
-        }
-    }
+            enemyHPBarElArray[0].value -= damage;
+            enemyHPElArray[0].innerHTML -= damage;
+            // getEnemyHPElement[0].innerHTML -= damage;
+            // getEnemyHPBarElement[0].value -= damage;
+    }}
     heal() {
         console.log('heals a specific amount');
     }
     die() {
-        for(let i = 0; i < enemyArray.length; i++) {
-            if (enemyArray[i].id === this.id) {
-                enemyContainerEl.children[i].remove();
-                enemyArray.splice(i, 1);
-            }
-        }
+        enemyContainerEl.children.item(0).remove();
+        enemyArray.splice(0, 1)
+        enemyHPBarElArray.shift();
+        enemyHPElArray.shift();
     }
 
 }
 
-const greenSlime = new Enemy('green-slime', 30, 30);
+const greenSlime = new Enemy('green-slime', 5, 10);
 const redSlime = new Enemy('red-slime', 20, 20);
 const blueSlime = new Enemy('blue-slime', 30, 30);

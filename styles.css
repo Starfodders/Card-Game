@@ -145,7 +145,21 @@ button {
 }
 
 .energy-container {
+    position: absolute;
+    top: 10%;
+    left: 22%;
     width: 100%;
+}
+#energy-value-container {
+    margin-left: 3em;
+    margin-top: 0.5em;
+}
+#mana-bar-bg {
+    width: 10%;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
 }
 
 progress {
@@ -254,7 +268,32 @@ dice roll
 #deck-container {
     max-width: 10%;
 }
-
+#deck-asset-container {
+    position: relative;
+}
+#deck-bg {
+    width: 70%;
+    padding-left: 10%;
+    z-index: -1;
+}
+#deck-count{
+    position: absolute;
+    top: 41%;
+    left: 35%;
+}
+#discard-asset-container, #destroy-asset-container {
+    position: relative;
+}
+#discard-bg, #destroy-bg {
+width: 70%;
+padding-right: 10%;
+z-index: -1;
+}
+#destroy-count, #discard-count {
+    position: absolute;
+    top: 40%;
+    right: 67%;
+}
 #hand-container {
     height: 80%;
     width: 100%;

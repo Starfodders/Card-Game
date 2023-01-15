@@ -14,7 +14,8 @@ Jan 02
 - Function AssignHPListener() doesn't work to change the style of the progress bar
 <!-- - Getting TypeError: cannot read properties of undefined (reading: id) when modifying the enemy HPs. Unsure why? -->
         (Fixed Jan 03 - Changed from a For loop to a For Each applied onto EnemyArray. I'm honestly not sure why this fixed the problem)
-- When DiscardUsedCard() is called, the correct HTML element is removed. However since I'm using 'splice' and finding the first valid index, it'll remove the wrong array index typically
+<!-- - When DiscardUsedCard() is called, the correct HTML element is removed. However since I'm using 'splice' and finding the first valid index, it'll remove the wrong array index typically -->
+        (Jan 14 resolve - not great fix but using IndexOf, it finds the first TRUE index. This will work, I don't plan on scaling too high)
 
 Jan 05 
 <!-- - Still working on mousedrag. Successfully removed event listener for the card following the cursor on mouseup. -->
@@ -23,8 +24,10 @@ Jan 05
         (Fixed Jan 06 - needed to reset initial X Y to 0, not to equal the values. The latter adds these values to left/right, which is why it was not working as intended)
 
 Jan 07 
-- Enemy.takeDamage() does not update the HTML element properly.
-
+<!-- - Enemy.takeDamage() does not update the HTML element properly. -->
+        (Fixed Jan 14) - mutated querySelectorAll from Nodelist to Array, then shift() the dead enemy element to move it all forward
 Jan 10
-- When using 'block' first, the next move will always be BLOCK even if it's not. This bug doesn't exist for attack, then block. However this works if played from 0 -> 5 index, not descending?
-- Also if enemy dies with an attack, the card is removed from hand but the HTML element remains
+<!-- - When using 'block' first, the next move will always be BLOCK even if it's not. This bug doesn't exist for attack, then block. However this works if played from 0 -> 5 index, not descending? -->
+        (Fixed Jan 14) - Error was isolated to splicing after the card is played. I was passing an object, not the object's index.
+
+Jan 14

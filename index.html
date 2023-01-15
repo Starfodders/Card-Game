@@ -14,13 +14,14 @@
         <!-- <img class='bg-img' src='/assets/background-banner-pixel.png' /> -->
         <div class = 'top-container'>
             <h2>Playing as <span id = 'top-id-name'></span></h2>
-            <h3>Build 0.09</h3>
+            <h3>Build 0.5</h3>
         </div>
         <img src = './assets/forest-bg.jpg' id = 'bg-img' alt = 'credit: Yusuf Artun on Behance.net'/>
         <div id='characters-container'>
             <div id='player-container'>
                 <div class='energy-container'>
-                    <h1><span id = 'current-energy'>0</span>/3 Energy<h1>
+                    <h1 id = 'energy-value-container'><span id = 'current-energy'>0</span>/3</h1>
+                    <img src = './assets/manabar.png' id = 'mana-bar-bg'/>
                 </div>
             </div>
             <div id='enemy-container'>
@@ -40,15 +41,24 @@
                 </div>
         <div class='play-container'>
             <div id = 'deck-container'>
-                <h2>This deck has <span id ='deck-count'>0</span> cards</h2>
+                <div id = 'deck-asset-container'>
+                <img src = './assets/deck.png' alt = 'deck-asset' id = 'deck-bg'/>
+                <span id ='deck-count'>0</span>
+                </div>
                 <button id = 'draw-button'>Draw 1</button>
                 <button id = 'turn-start-btn'>Turn Start</button>
             </div>
             <div id = 'hand-container'>
             </div>
             <div id = 'discard-container'>
-                <h2>Discard pile has <span id = 'discard-count'>0</span> cards</h2>
-                <h2>Destroyed Cards <span id ='destroy-count'>0</span></h2>
+                <div id = 'discard-asset-container'>
+                    <img src = './assets/discard.png' alt = 'discard-asset' id ='discard-bg'/>
+                    <span id = 'discard-count'>0</span>
+                </div>
+                <div id = 'destroy-asset-container'>
+                    <img src = './assets/destroy.png' alt = 'destroy-asset' id ='destroy-bg'/>
+                    <span id ='destroy-count'>0</span>
+                </div>
             </div>
         </div>
     </div>

@@ -1,5 +1,3 @@
-const currEnergyEl = document.querySelector('#current-energy');
-
 
 let gameOver = false;
 

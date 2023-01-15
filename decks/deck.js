@@ -44,24 +44,30 @@ class Deck {
         }
         return this.deck;
     }   
-    useCard(card, target) {    
-        console.log(card);                                                                         //implement specific card choices. YourDeck.useCard(yourDeck.hand[card])
+    useCard(card, index) {    
+        // console.log(card);                                                                         //implement specific card choices. YourDeck.useCard(yourDeck.hand[card])
+        if (card.cost - currEnergyEl.innerHTML > 0) {
+            console.log('insufficient energy');
+        } else {
+        currEnergyEl.innerHTML -= card.cost;
         if (card.type === 'attack') {  
             soundObj.playAttackSound();
-            this.discardUsedCard(card)
-            enemyArray[target].takeDamage(card.attributes.damage);
+            this.discardUsedCard(card, index)
+            enemyArray[0].takeDamage(card.attributes.damage);                                       //since unable to read this 'id' from enemy class, won;t read past it
         } else if (card.type === 'tactic' && card.attributes.hasOwnProperty('damage') === true) {
             soundObj.playAttackSound();
-            this.discardUsedCard(card)
+            this.discardUsedCard(card, index)
         } else {
             baseChar.modArmour(card.attributes.block)
             soundObj.playGuardSound()
-            this.discardUsedCard(card)
+            this.discardUsedCard(card, index)
         }
+        } 
     }
-    discardUsedCard(card) {
+    discardUsedCard(card, index) {
         this.discardPile.push(card);
-        this.hand.splice(card,1);                                                                       //removes card from hand array since push doesn't mutate
+        console.log(card);
+        this.hand.splice(index,1);                                                                       //removes card from hand array since push doesn't mutate
         this.updateCounts();
     }
     // discard(card) {                                                     //for cards tbat discard card
@@ -150,6 +156,8 @@ const doubleCards = allCards.concat(allCards);                                  
 const deckCountEl = document.querySelector('#deck-count');
 const discardCountEl = document.querySelector('#discard-count');
 const destroyCountEl = document.querySelector('#destroy-count');
+const currEnergyEl = document.querySelector('#current-energy');
+
 
 // const yourDeck = new Deck;
 // doubleCards.forEach(card => {
