@@ -10,7 +10,8 @@ Look into Next.JS to replace Express.JS as it includes bundling.
 <!-- Right now, deck has a .useCard() method that successfully moves it into discard pile. However this doesn't mutate original hand array. -->
             (Fixed: added Discard function which is called after card is used)
             
-Need to add event listeners to detect which card is being used, locate it and remove it from hand array to add to discard.
+<!-- Need to add event listeners to detect which card is being used, locate it and remove it from hand array to add to discard. -->
+        (Fixed: added this feature)
 
 Shrink card text based on its parent container
 
@@ -29,3 +30,5 @@ When an enemy dies, decrement the enemy array
 
 In order to create a discard animation, I need to still render an HTML element and apply animation onto it
 Also want to add a red appearance to the slime when it dies
+
+Add listener for card descriptions, when a buff is added then it will update the value

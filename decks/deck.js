@@ -12,27 +12,27 @@ class Deck {
     draw(cards) {                                                                   //draw x amount of cards and push into hand
         for (let i = 0; i < cards; i++) {
             setTimeout(() => {
-            if (this.hand.length >= 10 && this.deck.length !== 0) {                            //max hand size is 10 cards, if overdraw then send to discard pile
-                this.discardPile.push(this.deck.pop())
-                this.updateCounts()
-            } else if (this.deck.length === 0) {
-                this.discardPile.forEach((discard =>                                   //pushes every discarded card back into deck
-                    this.deck.push(discard)
-                ))
-                this.discardPile.length = 0;                                            //clears the discard pile
-                this.shuffle();             
-                this.updateCounts();
-                this.draw(1);
-                soundObj.playDrawSound();                 
-            }
-            else {
-                const drawnCard = this.deck.pop()
-                this.hand.push(drawnCard)
-                this.updateCounts()
-                createCardHTML(drawnCard)
-                soundObj.playDrawSound();
-            }
-        }, 250 * i)
+                if (this.hand.length >= 10 && this.deck.length !== 0) {                            //max hand size is 10 cards, if overdraw then send to discard pile
+                    this.discardPile.push(this.deck.pop())
+                    this.updateCounts()
+                } else if (this.deck.length === 0) {
+                    this.discardPile.forEach((discard =>                                   //pushes every discarded card back into deck
+                        this.deck.push(discard)
+                    ))
+                    this.discardPile.length = 0;                                            //clears the discard pile
+                    this.shuffle();
+                    this.updateCounts();
+                    this.draw(1);
+                    soundObj.playDrawSound();
+                }
+                else {
+                    const drawnCard = this.deck.pop()
+                    this.hand.push(drawnCard)
+                    this.updateCounts()
+                    createCardHTML(drawnCard)
+                    soundObj.playDrawSound();
+                }
+            }, 250 * i)
         }
     }
     shuffle() {                                                                     //stole this code but made it work, returns the instance of a shuffled deck
@@ -43,31 +43,34 @@ class Deck {
             this.deck[j] = temp;
         }
         return this.deck;
-    }   
-    useCard(card, index) {    
+    }
+    useCard(card, index) {
         // console.log(card);                                                                         //implement specific card choices. YourDeck.useCard(yourDeck.hand[card])
         if (card.cost - currEnergyEl.innerHTML > 0) {
             console.log('insufficient energy');
         } else {
-        currEnergyEl.innerHTML -= card.cost;
-        if (card.type === 'attack') {  
-            soundObj.playAttackSound();
-            this.discardUsedCard(card, index)
-            enemyArray[0].takeDamage(card.attributes.damage);                                       //since unable to read this 'id' from enemy class, won;t read past it
-        } else if (card.type === 'tactic' && card.attributes.hasOwnProperty('damage') === true) {
-            soundObj.playAttackSound();
-            this.discardUsedCard(card, index)
-        } else {
-            baseChar.modArmour(card.attributes.block)
-            soundObj.playGuardSound()
-            this.discardUsedCard(card, index)
+            currEnergyEl.innerHTML -= card.cost;
+            if (card.type === 'attack') {
+                soundObj.playAttackSound();
+                this.discardUsedCard(card, index)
+                enemyArray[0].takeDamage(card.attributes.damage);
+            } else {
+                if (card.attributes.hasOwnProperty('power')) {
+                    statusElCreate(baseChar, card.attributes);
+                    this.discardUsedCard(card, index)
+                }
+                else {
+                    baseChar.modArmour(card.attributes.block)
+                    soundObj.playGuardSound()
+                    this.discardUsedCard(card, index)
+                }
+            }
+            }
         }
-        } 
-    }
+
     discardUsedCard(card, index) {
         this.discardPile.push(card);
-        console.log(card);
-        this.hand.splice(index,1);                                                                       //removes card from hand array since push doesn't mutate
+        this.hand.splice(index, 1);                                                                       //removes card from hand array since push doesn't mutate
         this.updateCounts();
     }
     // discard(card) {                                                     //for cards tbat discard card
@@ -75,7 +78,7 @@ class Deck {
     destroy(card) {                                                     //permanently deletion 
         this.hand.splice(card, 1);
         this.destroyedCards.push(card);
-        const whichCard = this.hand.findIndex(cards => cards.name === card.name)           
+        const whichCard = this.hand.findIndex(cards => cards.name === card.name)
         handContainerEl.children[whichCard].remove();
         destroyCountEl.innerHTML = this.destroyedCards.length;
         return this.hand;
@@ -92,10 +95,10 @@ class Deck {
 class Card {
     constructor(name, cost, type, attributes) {
         this.name = name,
-        this.cost = cost,
-        this.type = type,                                       //attacks, tactics, specials
-        this.attributes = attributes                           //{attack: x, block: x, thorns: x}
-        }
+            this.cost = cost,
+            this.type = type,                                       //attacks, tactics, specials
+            this.attributes = attributes                           //{attack: x, block: x, thorns: x}
+    }
     onHover() {
         console.log('Listener for mouse hover, enlarges card');
     }
@@ -126,27 +129,39 @@ const soundObj = {
         atk.play();
     },
     playGuardSound() {
-        const  block = new Audio('./audio/shield.mp3');
+        const block = new Audio('./audio/shield.mp3');
         block.play();
     }
-}   
+}
+
+function statusElCreate(target, effect) {
+    const newStatus = document.createElement('img');
+    newStatus.className = 'status-effect';
+    if (effect.hasOwnProperty('power')) {
+        newStatus.src = './assets/status/atkUp.png'
+        playerStatusBar.appendChild(newStatus)
+        target.status.power = effect.power
+    }
+}
 
 //attacks
-const Strike = new Card('strike', 1, 'attack', {damage: 3})
-const Slash = new Card('slash', 2, 'attack', {damage: 7})
+const Strike = new Card('strike', 1, 'attack', { damage: 3 })
+const Slash = new Card('slash', 2, 'attack', { damage: 7 })
 
 //defenses
-const Block = new Card('block', 1, 'tactic', {block: 2})
+const Block = new Card('block', 1, 'tactic', { block: 2 })
+
+const Strength = new Card('strength', 2, 'tactic', { power: 1 })
 
 //elementals
-const FlameWave = new Card('flame-wave', 2, 'attack', {damage: 2});
-const Barrage = new Card('barrage', 2, 'attack', {damage: 2}) 
-const BurningBlock = new Card('burning-block', 1, 'tactic', {thorns: 1, block: 1})
+const FlameWave = new Card('flame-wave', 2, 'attack', { damage: 2 });
+const Barrage = new Card('barrage', 2, 'attack', { damage: 2 })
+const BurningBlock = new Card('burning-block', 1, 'tactic', { thorns: 1, block: 1 })
 
 //characterSpec
 const Track = new Card('track', 1, 'tactic')                                            //add card draw later
-const DancingBlade = new Card('dancing-blade', 2, 'attack', {damage: 2, block: 3})                          
-const FireLotus = new Card('fire-lotus', 3, 'attack', {damage: 10})                               //add debuff to receive 1 less energy
+const DancingBlade = new Card('dancing-blade', 2, 'attack', { damage: 2, block: 3 })
+const FireLotus = new Card('fire-lotus', 3, 'attack', { damage: 10 })                               //add debuff to receive 1 less energy
 
 
 const allCards = [Strike, Slash, Block, FlameWave, Barrage, BurningBlock, Track, DancingBlade, FireLotus]
@@ -167,9 +182,10 @@ const currEnergyEl = document.querySelector('#current-energy');
 
 const yourDeck = new Deck;
 
-for (let i = 0; i <= 10; i++){
+for (let i = 0; i <= 5; i++) {
     yourDeck.add(Strike)
     yourDeck.add(Block)
+    yourDeck.add(Strength)
 }
 
 

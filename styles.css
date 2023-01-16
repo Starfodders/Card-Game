@@ -406,3 +406,9 @@ z-index: -1;
     pointer-events: none;
 
 }
+#player-mods {
+    display: flex;
+}
+.status-effect {
+    width: 3em;
+}

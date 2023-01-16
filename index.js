@@ -31,7 +31,7 @@ function createCharacter(char) {
     
 }
 
-function cardControl(card) {                                                              
+function cardControl(card) {           
     let seletedCard;
     let moveMouseListener;
     let moveMouseListenerUp;
@@ -64,9 +64,9 @@ function cardControl(card) {
                 card.style.top = 0;
                 document.body.removeEventListener('mouseup', moveMouseListenerUp)                   //after release, remove the listener too to prevent cycling
             } else {
+                //(TO FIX: need to check card energy, not remaining energy)
                 if (currEnergyEl.innerHTML != 0) {
                     selectIndicator(selectedCard);
-                    console.log(selectedCard);
                     document.body.removeEventListener('mouseup', moveMouseListenerUp)
                 } else {
                     card.style.left = 0;
@@ -89,7 +89,7 @@ function cardControl(card) {
         //render the picker, hide the card, and make picker follow your mouse
         const picker = document.createElement('div');
         picker.classList = 'chooser';
-        picker.innerHTML = `<img src = './assets/cursor-xxl.png'>`;
+        picker.innerHTML = `<img src = './assets/UIAssets/cursor-xxl.png'>`;
         characterContainerEl.append(picker);
         card.style.display = 'none';
         //follows mouse position and updates HTML graphic
@@ -229,7 +229,7 @@ function getElement() {
     }
     for (let i = 0; i <= 2; i++) {                                               //loops 3 times
         elementsRolled.push(elementList[diceRoll()])                            //pushes roll into the array
-        elementImgHolder[i].src = `/assets/${elementsRolled[i]}.png`                 //changes the src of the elementRoll to whatever index we dice rolled onto
+        elementImgHolder[i].src = `/assets/UIAssets/${elementsRolled[i]}.png`                 //changes the src of the elementRoll to whatever index we dice rolled onto
     }
     // console.log(elementsRolled);
     return elementsRolled;
@@ -255,7 +255,6 @@ function drawCardButtonEl() {
 function turnStartButtonEl() {
     turnStartEl.addEventListener('click', () => {
         turnStart();
-        console.log(yourDeck.hand);
     })
 }
 
@@ -314,6 +313,7 @@ const getEnemyHPElement = document.querySelectorAll('.enemy-hp-values-container 
 const getEnemyHPBarElement = document.querySelectorAll('.enemy-hp-values-container progress')               //gets progress bar elements
 const enemyHPElArray = Array.from(getEnemyHPElement);
 const enemyHPBarElArray = Array.from(getEnemyHPBarElement);
+const playerStatusBar = document.querySelector('#player-mods');
 
 
 
