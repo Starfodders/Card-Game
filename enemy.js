@@ -24,17 +24,18 @@ class Enemy {
             this.hp -= damage;
             enemyHPBarElArray[0].value -= damage;
             enemyHPElArray[0].innerHTML -= damage;
-            // getEnemyHPElement[0].innerHTML -= damage;
-            // getEnemyHPBarElement[0].value -= damage;
     }}
     heal() {
         console.log('heals a specific amount');
     }
     die() {
-        enemyContainerEl.children.item(0).remove();
-        enemyArray.splice(0, 1)
-        enemyHPBarElArray.shift();
-        enemyHPElArray.shift();
+        enemyContainerEl.children.item(0).style.animation = 'enemy-dead-anim 1s'
+        setTimeout(() => {
+            enemyContainerEl.children.item(0).remove();
+            enemyArray.splice(0, 1)
+            enemyHPBarElArray.shift();
+            enemyHPElArray.shift();
+        }, 1000)
     }
 
 }

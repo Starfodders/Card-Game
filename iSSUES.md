@@ -31,3 +31,9 @@ Jan 10
         (Fixed Jan 14) - Error was isolated to splicing after the card is played. I was passing an object, not the object's index.
 
 Jan 14
+<!-- When right clicking to de-select a card from play, the card is still in memory and the next card played will always be that card -->
+        (Fixed Jan 16 - was caused by removed HTML element but card being in memory, artifact from 0 energy state)
+
+Jan 16
+<!-- At no energy, left clicking the card will not trigger the card but will still remove the HTML element. It remains in memory, in hand array -->
+        (Fixed Jan 16 - added conditional for 0 energy)

@@ -26,3 +26,6 @@ Left updating monster HP elements upon receiving damage for now. I'll have to ch
 Add appropriate enemy selector using mouse
 
 When an enemy dies, decrement the enemy array
+
+In order to create a discard animation, I need to still render an HTML element and apply animation onto it
+Also want to add a red appearance to the slime when it dies

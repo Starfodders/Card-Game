@@ -328,9 +328,47 @@ z-index: -1;
 #discard-container {
     max-width: 10%;
 }
-
-
-
+@keyframes armour-gain-anim {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1
+    }
+}
+@keyframes card-draw-anim {
+    from {
+        transform: scale(0.2) translateX(-600px)
+    }
+    to {
+        transform: scale(1) translateX(0px)
+    }
+}
+@keyframes card-return-anim {
+    from {
+        transform: translateY(-100px)
+    }
+    to {
+        transform: translateY(0)
+    }
+}
+@keyframes enemy-dead-anim {
+    from {
+        opacity: 1
+    }
+    to {
+        opacity: 0
+    }
+}
+/* @keyframes card-discard-anim {
+    from {
+        translateY: (-1000px)
+    }
+    to {
+        translateY: (-200px);
+        translateX: (600px)
+    }
+} */
 
 /* Card Formating */
 .attack, .tactic {

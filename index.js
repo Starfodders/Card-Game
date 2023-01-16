@@ -27,7 +27,8 @@ function createCharacter(char) {
     <div id = 'player-mods'>
         <p></p>
     </div>`
-    playerContainerEl.prepend(avatar)
+    playerContainerEl.prepend(avatar);
+    
 }
 
 function cardControl(card) {                                                              
@@ -63,9 +64,16 @@ function cardControl(card) {
                 card.style.top = 0;
                 document.body.removeEventListener('mouseup', moveMouseListenerUp)                   //after release, remove the listener too to prevent cycling
             } else {
-                selectIndicator(selectedCard);
-                document.body.removeEventListener('mouseup', moveMouseListenerUp)
-            }
+                if (currEnergyEl.innerHTML != 0) {
+                    selectIndicator(selectedCard);
+                    console.log(selectedCard);
+                    document.body.removeEventListener('mouseup', moveMouseListenerUp)
+                } else {
+                    card.style.left = 0;
+                    card.style.top = 0;
+                    document.body.removeEventListener('mouseup', moveMouseListenerUp)
+                }
+            } 
         }}
         )
     })
@@ -114,6 +122,7 @@ function cardControl(card) {
                 case 2:
                     pickerEl.remove();
                     card.style.removeProperty('display')
+                    card.style.animation = 'card-return-anim 0.5s'
                     card.style.left = 0;
                     card.style.top = 0;
                     break;
@@ -138,18 +147,6 @@ function cardControl(card) {
 //     }
 // }
 
-function drawCardButtonEl() {
-    drawButtonEl.addEventListener('click', () => {
-        yourDeck.draw(1)                                                        //hard coded to refer to yourDeck
-    })
-}
-function turnStartButtonEl() {
-    turnStartEl.addEventListener('click', () => {
-        turnStart();
-        console.log(yourDeck.hand);
-    })
-}
-
 function createCardHTML(card) {
     function extractAttribute() {                                                           //not great solution, but allows me to display the attributes
         for (const att in card.attributes) {
@@ -170,19 +167,22 @@ function createCardHTML(card) {
         </div>`
     if (handContainerEl.childElementCount <= 10) {                                                     //checks to make sure theres 10 or less cards in hand
         handContainerEl.appendChild(nextCard);                                                              //add to hand container
+        cardAnim(nextCard)
         cardControl(nextCard)
     } else {
         console.log('card was instead sent to discard pile');
     }
+    function cardAnim(card) {
+        card.style.animation = "card-draw-anim 0.5s"
+    }
 }
 
 const enemyArray = [];                                                                      //each new enemy is added to array for easier selection;
-
 function createEnemyHTML(enemy) {
     // const getEnemyIndex = enemyArray[enemyArray.length - 1];                                       //gets most recent addition to the array   
     const enemyGen = document.createElement('div');
     enemyGen.className = 'monster-placement';
-    enemyGen.innerHTML = `<img src = './assets/Slime.gif' alt ='monster'/>
+    enemyGen.innerHTML = `<img src = './assets/Slime.gif' alt ='monster' id = enemy-${enemyArray.length}-img/>
         <div class = 'enemy-hp-values-container'>
             <label for = 'enemy-${enemyArray.length}'>
             <span id = enemy-${enemyArray.length}-curr-hp>${enemy.hp}</span>/${enemy.hpmax}</label>
@@ -247,13 +247,24 @@ function diceAnimationRemove() {                                                
         })
     }, 1000)
 }
+function drawCardButtonEl() {
+    drawButtonEl.addEventListener('click', () => {
+        yourDeck.draw(1)                                                        //hard coded to refer to yourDeck
+    })
+}
+function turnStartButtonEl() {
+    turnStartEl.addEventListener('click', () => {
+        turnStart();
+        console.log(yourDeck.hand);
+    })
+}
 
 //////////
 //control start of turn i.e. check affixes, energy regain, card draw
 //////////
 
-function turnStart(energy) {
-    function updateEnergy(energy = 6) {
+function turnStart(energy, draw = 3) {
+    function updateEnergy(energy = 3) {
         if (energy < 0) {
             throw new RangeError('The energy value must be either greater than or equal to 0')
         } else {
@@ -277,7 +288,7 @@ function turnStart(energy) {
         }
     }
     yourDeck.shuffle();
-    yourDeck.draw(5);
+    yourDeck.draw(draw);
     updateEnergy(energy);
     elementAnimation();
 }
@@ -286,7 +297,6 @@ function turnStart(energy) {
 function main() {
     drawCardButtonEl();
     turnStartButtonEl();
-
     createCharacter(baseChar)
     createEnemyHTML(greenSlime)
     createEnemyHTML(redSlime)

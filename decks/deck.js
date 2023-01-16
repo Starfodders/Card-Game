@@ -11,6 +11,7 @@ class Deck {
     }
     draw(cards) {                                                                   //draw x amount of cards and push into hand
         for (let i = 0; i < cards; i++) {
+            setTimeout(() => {
             if (this.hand.length >= 10 && this.deck.length !== 0) {                            //max hand size is 10 cards, if overdraw then send to discard pile
                 this.discardPile.push(this.deck.pop())
                 this.updateCounts()
@@ -23,16 +24,15 @@ class Deck {
                 this.updateCounts();
                 this.draw(1);
                 soundObj.playDrawSound();                 
-                //draw 5 cards, only 3 cards left in deck
-                //at instance 4, detect 0 cards so initiate reshuffle() and draw remaining
             }
             else {
                 const drawnCard = this.deck.pop()
                 this.hand.push(drawnCard)
-                createCardHTML(drawnCard)
                 this.updateCounts()
+                createCardHTML(drawnCard)
                 soundObj.playDrawSound();
             }
+        }, 250 * i)
         }
     }
     shuffle() {                                                                     //stole this code but made it work, returns the instance of a shuffled deck

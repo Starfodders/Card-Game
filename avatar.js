@@ -71,7 +71,15 @@ class Avatar {
     modArmour(change) {
         if (Number.isInteger(change) != true || change < 0) {
             throw new RangeError('must be positive integer')
-        } else {
+        } else if (this.armour === 0) {                                                                     //plays an animation when at 0 armour, gain armour
+            for (let i = 0; i < armourEl.children.length; i++ ) {
+                armourEl.children.item(i).style.animation = 'armour-gain-anim 0.15s linear'
+            }
+            this.armour += change;
+            playerArmourVal.innerHTML = this.armour;
+            armourEl.classList.remove('inactive')
+        }
+        else {
             this.armour += change;
             playerArmourVal.innerHTML = this.armour;
             armourEl.classList.remove('inactive')
