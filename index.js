@@ -6,7 +6,6 @@ const enemyContainerEl = document.querySelector('#enemy-container');
 const playerContainerEl = document.querySelector('#player-container')
 const characterContainerEl = document.querySelector('#characters-container')
 const turnStartEl = document.querySelector('#turn-start-btn')
-let sheet = document.styleSheets[0];
 
 
 function createCharacter(char) {
@@ -65,8 +64,7 @@ function cardControl(cardHTML, card) {
                     cardHTML.style.top = 0;
                     document.body.removeEventListener('mouseup', moveMouseListenerUp)                   //after release, remove the listener too to prevent cycling
                 } else {
-                    console.log(card);
-                    //(TO FIX: need to check card energy, not remaining energy)
+                    //checks energy amounts before moving onto selector
                     if (currEnergyEl.innerHTML != 0 && currEnergyEl.innerHTML - card.cost >= 0) {
                         selectIndicator(selectedCard);
                         document.body.removeEventListener('mouseup', moveMouseListenerUp)
@@ -158,7 +156,18 @@ function createCardHTML(card) {
             const string = `${att.charAt(0).toUpperCase() + att.slice(1)} : ${card.attributes[att]}`
             attrArray.push(string)
         }
-        return attrArray.toString()
+        //formatting for cards with more than 1 attribute, adding line breaks
+        if (attrArray.length > 1) {
+            for (let i = 1; i < attrArray.length; i++) {
+                if (i % 2 != 0) {
+                    attrArray.splice(i, 0, `</br>`)
+                }
+            }
+            return attrArray.toString().split(',').join(' ')
+        }
+        else {
+            return attrArray.toString()
+        }
     }
     //replace hyphen (-) with a space for card names
     function addSpace(string) {

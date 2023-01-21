@@ -19,7 +19,7 @@ class Avatar {
             this.hp = hp,
             this.maxhp = maxhp
             this.armour = 0;
-            this.status = {power: 0, thorns: 0};
+            this.status = {power: 0, thorns: 0, fatigue: 0};
     }
     fullHeal() {
         this.hp = this.maxhp

@@ -37,4 +37,5 @@ Jan 14
 Jan 16
 <!-- At no energy, left clicking the card will not trigger the card but will still remove the HTML element. It remains in memory, in hand array -->
         (Fixed Jan 16 - added conditional for 0 energy)
-I'm checking for energy total before playing a card. However I need to check card cost. I'll encounter a bug if I have 1 energy and try to play a 2 cost. It'll flag it's not usable but the HTML element is still bugged out because I'm not passing the card's cost here. 
+<!-- I'm checking for energy total before playing a card. However I need to check card cost. I'll encounter a bug if I have 1 energy and try to play a 2 cost. It'll flag it's not usable but the HTML element is still bugged out because I'm not passing the card's cost here.  -->
+        (Fixed Jan 21 - passed card in memory as a parameter, can now check card.cost and compare to energy-remaining)

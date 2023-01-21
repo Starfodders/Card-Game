@@ -44,23 +44,25 @@ class Deck {
         }
         return this.deck;
     }
+    //pass card as well as index to remove it from hand array
     useCard(card, index) {
-        // console.log(card);                                                                         //implement specific card choices. YourDeck.useCard(yourDeck.hand[card])
         if (card.cost - currEnergyEl.innerHTML > 0) {
             console.log('insufficient energy');
         } else {
+            //different scenarios based on card type
             currEnergyEl.innerHTML -= card.cost;
             if (card.type === 'attack') {
                 soundObj.playAttackSound();
                 this.discardUsedCard(card, index)
                 enemyArray[0].takeDamage(card.attributes.damage);
             } else {
-                if (card.attributes.hasOwnProperty('power')) {
-                    statusElCreate(baseChar, card.attributes);
+                const attrCheck = card.attributes;
+                if (attrCheck.hasOwnProperty('power') || attrCheck.hasOwnProperty('thorns') || attrCheck.hasOwnProperty('fatigue')) {
+                    statusElCreate(baseChar, attrCheck);
                     this.discardUsedCard(card, index)
                 }
                 else {
-                    baseChar.modArmour(card.attributes.block)
+                    baseChar.modArmour(attrCheck.block)
                     soundObj.playGuardSound()
                     this.discardUsedCard(card, index)
                 }
@@ -110,15 +112,6 @@ class Card {
     }
 }
 
-// function playDrawSound() {
-//     const draw = new Audio('./audio/carddraw.mp3');
-//     draw.play();
-// }
-// function playAttackSound() {
-//     const atk = new Audio('./audio/attackSound.mp3');
-//     atk.play();
-// }
-
 const soundObj = {
     playDrawSound() {
         const draw = new Audio('./audio/carddraw.mp3');
@@ -141,6 +134,12 @@ function statusElCreate(target, effect) {
         newStatus.src = './assets/status/atkUp.png'
         playerStatusBar.appendChild(newStatus)
         target.status.power = effect.power
+    } else if (effect.hasOwnProperty('thorns') && effect.hasOwnProperty('block')) {             //if card has both properties
+        newStatus.src = '';
+        playerStatusBar.appendChild(newStatus);
+        target.status.thorns = effect.thorns;
+        baseChar.modArmour(effect.block)
+        soundObj.playGuardSound()
     }
 }
 
@@ -153,19 +152,18 @@ const Block = new Card('block', 1, 'tactic', { block: 2 })
 
 const Strength = new Card('strength', 2, 'tactic', { power: 1 })
 const FireShield = new Card('fire-shield', 1, 'tactic', {block: 1, thorns: 1})
+const FireLotus = new Card('fire-lotus', 3, 'attack', { damage: 10, fatigue: 1})                               //add debuff to receive 1 less energy
 
 //elementals
 const FlameWave = new Card('flame-wave', 2, 'attack', { damage: 2 });
 const Barrage = new Card('barrage', 2, 'attack', { damage: 2 })
-const BurningBlock = new Card('burning-block', 1, 'tactic', { thorns: 1, block: 1 })
 
 //characterSpec
 const Track = new Card('track', 1, 'tactic')                                            //add card draw later
 const DancingBlade = new Card('dancing-blade', 2, 'attack', { damage: 2, block: 3 })
-const FireLotus = new Card('fire-lotus', 3, 'attack', { damage: 10 })                               //add debuff to receive 1 less energy
 
 
-const allCards = [Strike, Slash, Block, FlameWave, Barrage, BurningBlock, Track, DancingBlade, FireLotus]
+const allCards = [Strike, Slash, Block, FlameWave, Barrage, Track, DancingBlade, FireLotus]
 
 const doubleCards = allCards.concat(allCards);                                          //for current purposes, double # to create a bigger deck
 
@@ -188,6 +186,7 @@ for (let i = 0; i <= 3; i++) {
     yourDeck.add(Block)
     yourDeck.add(Strength)
     yourDeck.add(FireShield)
+    yourDeck.add(FireLotus)
 }
 
 
