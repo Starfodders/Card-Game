@@ -152,6 +152,7 @@ const Slash = new Card('slash', 2, 'attack', { damage: 7 })
 const Block = new Card('block', 1, 'tactic', { block: 2 })
 
 const Strength = new Card('strength', 2, 'tactic', { power: 1 })
+const FireShield = new Card('fire-shield', 1, 'tactic', {block: 1, thorns: 1})
 
 //elementals
 const FlameWave = new Card('flame-wave', 2, 'attack', { damage: 2 });
@@ -182,10 +183,11 @@ const currEnergyEl = document.querySelector('#current-energy');
 
 const yourDeck = new Deck;
 
-for (let i = 0; i <= 5; i++) {
+for (let i = 0; i <= 3; i++) {
     yourDeck.add(Strike)
     yourDeck.add(Block)
     yourDeck.add(Strength)
+    yourDeck.add(FireShield)
 }
 
 

@@ -28,53 +28,56 @@ function createCharacter(char) {
         <p></p>
     </div>`
     playerContainerEl.prepend(avatar);
-    
+
 }
 
-function cardControl(card) {           
+function cardControl(cardHTML, card) {
     let seletedCard;
     let moveMouseListener;
     let moveMouseListenerUp;
     //hover effect and reset
-    card.addEventListener('mouseover', () => {                                  
-        card.style.transform = `translate(0, ${-50}px)`
+    cardHTML.addEventListener('mouseover', () => {
+        cardHTML.style.transform = `translate(0, ${-50}px)`
     })
-    card.addEventListener('mouseout', () => {                                
-        card.style.removeProperty('transform')
+    cardHTML.addEventListener('mouseout', () => {
+        cardHTML.style.removeProperty('transform')
     })
     //click and drag effect
-    card.addEventListener('mousedown', (e) => {                                             //gets event values of card initial X,Y
-        selectedCard = e.target; 
+    cardHTML.addEventListener('mousedown', (e) => {                                             //gets event values of card initial X,Y
+        selectedCard = e.target;
         let initialCardX = e.offsetX;                                                         //x, y towards card border (0,0 is top-left corner)
-        let initialCardY = e.offsetY;   
+        let initialCardY = e.offsetY;
         const initialMouseX = e.clientX;                                                     //sets initial click based on viewport
         const initialMouseY = e.clientY;
 
         document.body.addEventListener('mousemove', moveMouseListener = function moveMouse(e) {
             const moveX = e.clientX - initialMouseX;
             const moveY = e.clientY - initialMouseY;
-            card.style.left = `${initialCardX + moveX}px`                                
-            card.style.top = `${initialCardY + moveY}px`
-            })
-    //determine if card is being used in active play area or in hand container
-        document.body.addEventListener('mouseup', moveMouseListenerUp = function moveMouseUp(e) {{
-            document.body.removeEventListener('mousemove', moveMouseListener);
-            if (e.clientY > 500) {
-                card.style.left = 0;
-                card.style.top = 0;
-                document.body.removeEventListener('mouseup', moveMouseListenerUp)                   //after release, remove the listener too to prevent cycling
-            } else {
-                //(TO FIX: need to check card energy, not remaining energy)
-                if (currEnergyEl.innerHTML != 0) {
-                    selectIndicator(selectedCard);
-                    document.body.removeEventListener('mouseup', moveMouseListenerUp)
+            cardHTML.style.left = `${initialCardX + moveX}px`
+            cardHTML.style.top = `${initialCardY + moveY}px`
+        })
+        //determine if card is being used in active play area or in hand container
+        document.body.addEventListener('mouseup', moveMouseListenerUp = function moveMouseUp(e) {
+            {
+                document.body.removeEventListener('mousemove', moveMouseListener);
+                if (e.clientY > 500) {
+                    cardHTML.style.left = 0;
+                    cardHTML.style.top = 0;
+                    document.body.removeEventListener('mouseup', moveMouseListenerUp)                   //after release, remove the listener too to prevent cycling
                 } else {
-                    card.style.left = 0;
-                    card.style.top = 0;
-                    document.body.removeEventListener('mouseup', moveMouseListenerUp)
+                    console.log(card);
+                    //(TO FIX: need to check card energy, not remaining energy)
+                    if (currEnergyEl.innerHTML != 0 && currEnergyEl.innerHTML - card.cost >= 0) {
+                        selectIndicator(selectedCard);
+                        document.body.removeEventListener('mouseup', moveMouseListenerUp)
+                    } else {
+                        cardHTML.style.left = 0;
+                        cardHTML.style.top = 0;
+                        document.body.removeEventListener('mouseup', moveMouseListenerUp)
+                    }
                 }
-            } 
-        }}
+            }
+        }
         )
     })
     function selectIndicator(card) {
@@ -104,15 +107,15 @@ function cardControl(card) {
                 x = e.clientX;
                 y = e.clientY;
             }
-    
+
             picker.style.left = `${x}px`;
             picker.style.top = `${y}px`;
         }
         //functionality for left and right clicks. Left = use, Right = cancel 
         const pickerEl = document.querySelector('.chooser')
         picker.addEventListener('mousedown', (e) => {
-            switch(e.button) {
-                case 0: 
+            switch (e.button) {
+                case 0:
                     let cardIndex = getCardIndex()
                     const pickedCard = yourDeck.hand[cardIndex];
                     yourDeck.useCard(pickedCard, cardIndex);
@@ -128,7 +131,7 @@ function cardControl(card) {
                     break;
                 default:
                     console.log('unknown button');
-            }   
+            }
         })
     }
 }
@@ -148,29 +151,44 @@ function cardControl(card) {
 // }
 
 function createCardHTML(card) {
-    function extractAttribute() {                                                           //not great solution, but allows me to display the attributes
+    //extract card uses and convert to usable string to be used in string literal
+    function extractAttribute() {
+        const attrArray = []
         for (const att in card.attributes) {
-            return `${att} : ${card.attributes[att]}`
+            const string = `${att.charAt(0).toUpperCase() + att.slice(1)} : ${card.attributes[att]}`
+            attrArray.push(string)
+        }
+        return attrArray.toString()
+    }
+    //replace hyphen (-) with a space for card names
+    function addSpace(string) {
+        if (string.indexOf('-') != -1) {
+            const arr = string.split('-')
+            return arr.join(' ')
+        }
+        else {
+            return string
         }
     }
     const descrip = extractAttribute();
-    const nextCard = document.createElement('div');                                         //create new div element
+    const cardName = addSpace(card.name)
+    //create new div element skeleton
+    const nextCard = document.createElement('div');
     nextCard.className = `${card.type}`
     nextCard.innerHTML = `<div class = 'card-element-top'>
         <span class = 'name-block'>
-            ${card.name}
+            ${cardName}
         </span>
             </div>
         <img class = 'card-art-asset' src = './assets/Cards/${card.name}.png'/>
         <div class = 'card-description'>
             <p>${descrip}</p>
         </div>`
-    if (handContainerEl.childElementCount <= 10) {                                                     //checks to make sure theres 10 or less cards in hand
-        handContainerEl.appendChild(nextCard);                                                              //add to hand container
+    //checks for cards in hand, if over limit (10) then does not get added to HTMLCollection. If not, appends, apply functionality to it
+    if (handContainerEl.childElementCount <= 10) {
+        handContainerEl.appendChild(nextCard);
         cardAnim(nextCard)
-        cardControl(nextCard)
-    } else {
-        console.log('card was instead sent to discard pile');
+        cardControl(nextCard, card)
     }
     function cardAnim(card) {
         card.style.animation = "card-draw-anim 0.5s"
@@ -189,13 +207,13 @@ function createEnemyHTML(enemy) {
             <progress id = 'enemy-${enemyArray.length}-bar' value = '${enemy.hp}' max = '${enemy.hpmax}'>${enemy.hpmax}</progress>
         </div>
         <div class = 'enemy-mods-container'>
-            <p>'status here'</p>
+            <p></p>
         </div>`
     enemyContainerEl.appendChild(enemyGen);
     enemyArray.push(enemy);
 
     enemyGen.addEventListener('mouseover', (e) => {
-            if (document.body.querySelector(':has(.chooser)') != null) {
+        if (document.body.querySelector(':has(.chooser)') != null) {
             // sheet.insertRule('.enemy-hp-values-container:hover::before {content: url("./assets/cursor-xxl.png"); position: absolute; display: inline; width: 30px; height: 30px;}')
             // getEnemyChoice(enemy.id)
         }
