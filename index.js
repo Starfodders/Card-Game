@@ -24,7 +24,6 @@ function createCharacter(char) {
         </div>
     </div>
     <div id = 'player-mods'>
-        <p></p>
     </div>`
     playerContainerEl.prepend(avatar);
 
@@ -247,33 +246,33 @@ function createEnemyHTML(enemy) {
 ///////////
 
 
-const elementList = ['air', 'earth', 'fire', 'water'];      //array to hold the possible rolls
-const elementsRolled = [];                                  //an array to hold the rolled elements
+// const elementList = ['air', 'earth', 'fire', 'water'];      //array to hold the possible rolls
+// const elementsRolled = [];                                  //an array to hold the rolled elements
 
-function getElement() {
-    function diceRoll() {
-        return Math.floor(Math.random() * 4)              //dice roller and returns value between 0 and 3
-    }
-    for (let i = 0; i <= 2; i++) {                                               //loops 3 times
-        elementsRolled.push(elementList[diceRoll()])                            //pushes roll into the array
-        elementImgHolder[i].src = `/assets/UIAssets/${elementsRolled[i]}.png`                 //changes the src of the elementRoll to whatever index we dice rolled onto
-    }
-    // console.log(elementsRolled);
-    return elementsRolled;
-}
+// function getElement() {
+//     function diceRoll() {
+//         return Math.floor(Math.random() * 4)              //dice roller and returns value between 0 and 3
+//     }
+//     for (let i = 0; i <= 2; i++) {                                               //loops 3 times
+//         elementsRolled.push(elementList[diceRoll()])                            //pushes roll into the array
+//         elementImgHolder[i].src = `/assets/UIAssets/${elementsRolled[i]}.png`                 //changes the src of the elementRoll to whatever index we dice rolled onto
+//     }
+//     // console.log(elementsRolled);
+//     return elementsRolled;
+// }
 
-function playDiceRollSound() {                                                  //some audio for the dice roll
-    const diceAudio = new Audio('./audio/diceroll.mp3');
-    diceAudio.play();
-}
-function diceAnimationRemove() {                                                //after 1s, remove GIF and getElement()
-    setTimeout(() => {
-        getElement();
-        rollGIF.forEach(img => {
-            img.classList.add('inactive')
-        })
-    }, 1000)
-}
+// function playDiceRollSound() {                                                  //some audio for the dice roll
+//     const diceAudio = new Audio('./audio/diceroll.mp3');
+//     diceAudio.play();
+// }
+// function diceAnimationRemove() {                                                //after 1s, remove GIF and getElement()
+//     setTimeout(() => {
+//         getElement();
+//         rollGIF.forEach(img => {
+//             img.classList.add('inactive')
+//         })
+//     }, 1000)
+// }
 function drawCardButtonEl() {
     drawButtonEl.addEventListener('click', () => {
         yourDeck.draw(1)                                                        //hard coded to refer to yourDeck
@@ -283,8 +282,34 @@ function turnStartButtonEl() {
     turnStartEl.addEventListener('click', () => {
         turnStart();
     })
+    document.body.addEventListener('keydown', (e) => {
+        if (e.key === 'e') {
+            turnStart();
+        }
+    })
 }
+// function bodyCardListeners() {
+//     document.body.addEventListener('mousemove', moveMouseListener = function moveMouse(e) {
+    
 
+//     })
+//     for (let i = 1; i <= 10; i++) {
+//         document.body.addEventListener('keydown', (e) => {
+//             if (e.key === `${i}` && handContainerEl.children[i-1] != undefined) {
+//                 const currentCard = handContainerEl.children[i-1]
+                
+//                 document.body.addEventListener('mousemove', moveMouseListener = function moveMouse(e) {
+//                     // console.log('hello');
+//                     const initialMouseX = e.clientX;                                                     
+//                     const initialMouseY = e.clientY;
+//                     currentCard.style.left = `${initialMouseX}px`
+//                     currentCard.style.top = `${initialMouseY}px`
+
+//                 })
+//             }
+//         })
+//     }
+// }
 //////////
 //control start of turn i.e. check affixes, energy regain, card draw
 //////////
@@ -297,32 +322,33 @@ function turnStart(energy, draw = 3) {
             return currEnergyEl.innerHTML = energy
         }
     }
-    function elementAnimation() {
-        playDiceRollSound();
-        rollGIF.forEach(img => {                                                    //displays x3 dice GIF at once
-            img.classList.remove('inactive')
-        })
-        if (elementsRolled.length >= 1) {
-            elementImgHolder.forEach(element => {
-                element.src = ''                                                    //detects if theres any leftover elements src, if so it will remove the source attribute
-            });
-            elementsRolled.length = 0;                                              //removes any existing elements
-            return diceAnimationRemove();
-        }
-        else {
-            return diceAnimationRemove();
-        }
-    }
+    // function elementAnimation() {
+    //     playDiceRollSound();
+    //     rollGIF.forEach(img => {                                                    //displays x3 dice GIF at once
+    //         img.classList.remove('inactive')
+    //     })
+    //     if (elementsRolled.length >= 1) {
+    //         elementImgHolder.forEach(element => {
+    //             element.src = ''                                                    //detects if theres any leftover elements src, if so it will remove the source attribute
+    //         });
+    //         elementsRolled.length = 0;                                              //removes any existing elements
+    //         return diceAnimationRemove();
+    //     }
+    //     else {
+    //         return diceAnimationRemove();
+    //     }
+    // }
     yourDeck.shuffle();
     yourDeck.draw(draw);
     updateEnergy(energy);
-    elementAnimation();
+    // elementAnimation();
 }
 
 
 function main() {
     drawCardButtonEl();
     turnStartButtonEl();
+    // bodyCardListeners();
     createCharacter(baseChar)
     createEnemyHTML(greenSlime)
     createEnemyHTML(redSlime)

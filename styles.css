@@ -411,4 +411,5 @@ z-index: -1;
 }
 .status-effect {
     width: 3em;
+    margin-left: -1em;
 }

@@ -51,11 +51,17 @@ class Deck {
         } else {
             //different scenarios based on card type
             currEnergyEl.innerHTML -= card.cost;
-            if (card.type === 'attack') {
+            if (card.type === 'attack' && Object.entries(card.attributes).length === 1) {
                 soundObj.playAttackSound();
                 this.discardUsedCard(card, index)
                 enemyArray[0].takeDamage(card.attributes.damage);
-            } else {
+            } else if (card.type ==='attack' && Object.entries(card.attributes).length > 1) {
+                soundObj.playAttackSound();
+                statusElCreate(baseChar, card.attributes);
+                this.discardUsedCard(card, index)
+                enemyArray[0].takeDamage(card.attributes.damage);
+            }
+            else {
                 const attrCheck = card.attributes;
                 if (attrCheck.hasOwnProperty('power') || attrCheck.hasOwnProperty('thorns') || attrCheck.hasOwnProperty('fatigue')) {
                     statusElCreate(baseChar, attrCheck);
@@ -124,22 +130,33 @@ const soundObj = {
     playGuardSound() {
         const block = new Audio('./audio/shield.mp3');
         block.play();
+    },
+    playPowerUpSound() {
+        const buff = new Audio('./audio/powerUp.mp3');
+        buff.play();
     }
 }
 
 function statusElCreate(target, effect) {
+    //check if buff already exists
+    const currentStatus = target.status;
     const newStatus = document.createElement('img');
     newStatus.className = 'status-effect';
     if (effect.hasOwnProperty('power')) {
         newStatus.src = './assets/status/atkUp.png'
-        playerStatusBar.appendChild(newStatus)
         target.status.power = effect.power
+        playerStatusBar.appendChild(newStatus)
+        soundObj.playPowerUpSound();
     } else if (effect.hasOwnProperty('thorns') && effect.hasOwnProperty('block')) {             //if card has both properties
-        newStatus.src = '';
+        newStatus.src = '/assets/status/thorns.png';
         playerStatusBar.appendChild(newStatus);
         target.status.thorns = effect.thorns;
         baseChar.modArmour(effect.block)
         soundObj.playGuardSound()
+    } else if (effect.hasOwnProperty('fatigue')) {
+        newStatus.src = './assets/status/fatigue.png';
+        playerStatusBar.appendChild(newStatus);
+        target.status.fatigue = effect.fatigue;
     }
 }
 
